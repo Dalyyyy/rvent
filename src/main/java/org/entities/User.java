@@ -1,8 +1,9 @@
-package org.example.entities;
+package org.entities;
+
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+
+import java.util.List;
 
 public class User {
     private int id;
@@ -12,6 +13,11 @@ public class User {
     private String password;
     private LocalDate dateBirth;
     private int reservationNbr;
+    private Role roleUser;
+    private List<Reservation> reservations;
+    private Team team;
+    private List<Notification> notifications;
+    private List<Reclamation> reclamations;
 
     public User(String name, String familyName, String email, String password, LocalDate dateBirth) {
         this.name = name;
@@ -31,14 +37,10 @@ public class User {
         this.reservationNbr = reservationNbr;
     }
 
-    public User(String name, String familyName, String email, String password, LocalDate dateBirth, int reservationNbr) {
-        this.name = name;
-        this.familyName = familyName;
-        this.email = email;
-        this.password = password;
-        this.dateBirth = dateBirth;
-        this.reservationNbr = reservationNbr;
+    public User() {
+
     }
+
     public int getId() {
         return id;
     }
@@ -95,6 +97,46 @@ public class User {
         this.reservationNbr = reservationNbr;
     }
 
+    public Role getRoleUser() {
+        return roleUser;
+    }
+
+    public void setRoleUser(Role roleUser) {
+        this.roleUser = roleUser;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public List<Reclamation> getReclamations() {
+        return reclamations;
+    }
+
+    public void setReclamations(List<Reclamation> reclamations) {
+        this.reclamations = reclamations;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -105,7 +147,9 @@ public class User {
                 ", password='" + password + '\'' +
                 ", birthDate=" + dateBirth +
                 ", reservationNbr=" + reservationNbr +
+                ", role="+roleUser+
                 '}';
     }
+
 
 }

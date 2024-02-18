@@ -1,9 +1,12 @@
-package org.example.services;
+package org.services;
 
-import org.example.entities.User;
-import org.example.util.RventDB;
+import org.entities.Role;
+import org.entities.User;
+import org.util.RventDB;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +16,42 @@ public class UserService implements IUserService{
         connection = RventDB.getInstance().getConnection;
     }
     @Override
-    public void addUser(User user) throws SQLException {
-        String sql = "INSERT INTO user (name, familyName, email, password, dateBirth) " +
-                "VALUES (?, ?, ?, ?, ?)";
+    public boolean authenticateUser(String email, String password) throws SQLException {
+        String sql = "SELECT * FROM user WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String storedPassword = resultSet.getString("password");
+                    return storedPassword.equals(password);
+                }
+            }
+        }
+        return false;
+    }
+    @Override
+    public void register(User user, String confirmedPassword) throws SQLException {
+        if (!user.getPassword().equals(confirmedPassword)) {
+            throw new IllegalArgumentException("Password and confirmed password do not match.");
+        }
+
+        String sql = "INSERT INTO user (name, familyName, email, password, dateBirth, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getFamilyName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
+            preparedStatement.setString(6, Role.CLIENT.name());
+
+            preparedStatement.executeUpdate();
+        }
+    }
+    @Override
+    public void addOrganizer(User user) throws SQLException {
+        String sql = "INSERT INTO user (name, familyName, email, password, dateBirth, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getName());
@@ -23,6 +59,7 @@ public class UserService implements IUserService{
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
+            preparedStatement.setString(6, Role.ORGANIZER.name());
 
             preparedStatement.executeUpdate();
         }
@@ -36,7 +73,7 @@ public class UserService implements IUserService{
         preparedStatement.setString(3,user.getEmail());
         preparedStatement.setString(4,user.getPassword());
         preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
-        preparedStatement.setInt(6, user.getId());
+        preparedStatement.setObject(6, user.getId());
         preparedStatement.executeUpdate();
     }
 
@@ -44,7 +81,7 @@ public class UserService implements IUserService{
     public void deleteUser(int id) throws SQLException {
         String sql = "DELETE FROM user WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,id);
+        preparedStatement.setObject(1,id);
         preparedStatement.executeUpdate();
     }
 
@@ -56,7 +93,7 @@ public class UserService implements IUserService{
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id =resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String familyName = resultSet.getString("familyName");
                 String email = resultSet.getString("email");
@@ -70,6 +107,10 @@ public class UserService implements IUserService{
         }
 
         return users;
+    }
+    public int calculateAge(LocalDate birthDate) {
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDate, currentDate).getYears();
     }
 
 }
