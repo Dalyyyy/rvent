@@ -1,5 +1,6 @@
 package org.services;
 
+import org.entities.Event;
 import org.entities.Role;
 import org.entities.User;
 import org.util.RventDB;
@@ -65,6 +66,22 @@ public class UserService implements IUserService{
         }
     }
     @Override
+    public void addAdmin(User user) throws SQLException {
+        String sql = "INSERT INTO user (name, familyName, email, password, dateBirth, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getFamilyName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
+            preparedStatement.setString(6, Role.ADMIN.name());
+
+            preparedStatement.executeUpdate();
+        }
+    }
+    @Override
     public void updateUser(User user) throws SQLException {
         String sql = "update user set name=? , familyName=? , email=? , password=? , dateBirth=? WHERE id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -108,9 +125,11 @@ public class UserService implements IUserService{
 
         return users;
     }
+
     public int calculateAge(LocalDate birthDate) {
         LocalDate currentDate = LocalDate.now();
         return Period.between(birthDate, currentDate).getYears();
     }
+
 
 }

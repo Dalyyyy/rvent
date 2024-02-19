@@ -26,6 +26,10 @@ public class Team {
 
     }
 
+    public Team(String teamName) {
+        this.teamName = teamName;
+    }
+
     public int getId() {
         return id;
     }

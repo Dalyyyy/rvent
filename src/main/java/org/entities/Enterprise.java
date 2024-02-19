@@ -25,6 +25,14 @@ public class Enterprise {
         this.sponsoringRequests = sponsoringRequests;
     }
 
+    public Enterprise(int id, String fullName ,String description, String email, String password) {
+        this.id = id;
+        this.fullName = fullName;
+        this.description = description;
+        this.email = email;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }
