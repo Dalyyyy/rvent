@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="AccountAffichagee" prefHeight="897.0" prefWidth="986.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.DevenirSponsorForm">
+    <children>
+      <VBox fx:id="display" prefHeight="200.0" prefWidth="100.0">
+         <children>
+              <Pane fx:id="UpperSection" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection">
+                  <children>
+                  <TableView fx:id="SponTableView" layoutX="1.0" layoutY="10.0" prefHeight="927.0" prefWidth="1169.0">
+                     <columns>
+                        <TableColumn fx:id="nomColumn" prefWidth="81.0" style="-fx-text-fill: #3F4254; -fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Nom" />
+                        <TableColumn fx:id="prenomColumn" prefWidth="73.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Prenom" />
+                        <TableColumn fx:id="etabColumn" prefWidth="116.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Nom de l'Etablissement" />
+                        <TableColumn fx:id="TypeColumn" prefWidth="150.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Type de l'Etablissement" />
+                        <TableColumn fx:id="domaineColumn" prefWidth="147.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Le Domaine d'Application" />
+                        <TableColumn fx:id="adresseColumn" prefWidth="121.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Adresse" />
+                        <TableColumn fx:id="mailColumn" prefWidth="97.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Email" />
+                        <TableColumn fx:id="numColumn" prefWidth="131.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Numéro de téléphone" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="125.0" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Description" />
+                        <TableColumn fx:id="actionsColumn" prefWidth="125.6666259765625" style="-fx-background-color: #EFF2F5; -fx-border-color: #FFFFFF;" text="Actions" />
+                     </columns>
+                  </TableView>
+                  </children>
+              </Pane>
+         </children>
+      </VBox>
+      <VBox fx:id="addsponsor" prefHeight="856.0" prefWidth="1196.0" visible="false">
+         <children>
+            <AnchorPane prefHeight="634.0" prefWidth="1307.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <ChoiceBox fx:id="myChoiceBox" layoutX="489.0" layoutY="394.0" prefWidth="150.0" style="-fx-border-color: #E5EAEE; -fx-background-color: #ffffff;" />
+                  <Text fill="#3ce364" layoutX="471.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Collaborer avec Rvent" wrappingWidth="351.0">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="31.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="etablifield" layoutX="489.0" layoutY="346.0" prefHeight="30.0" prefWidth="205.0" promptText="Nom de l'établissement" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="443.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
+                  <TextField fx:id="prenomfield" layoutX="489.0" layoutY="301.0" prefHeight="30.0" prefWidth="205.0" promptText="Prenom" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="342.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom de l'établissement :" />
+                  <Text fill="#464e5f" layoutX="343.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type de l'établissement :" />
+                  <CheckBox fx:id="ITcheck" layoutX="489.0" layoutY="440.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="IT" textFill="#464e5f" />
+                  <Text fill="#464e5f" layoutX="333.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le domaine d'application :" />
+                  <CheckBox fx:id="marketingcheck" layoutX="798.0" layoutY="440.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Marketing" textFill="#464e5f" />
+                  <CheckBox fx:id="consultcheck" layoutX="908.0" layoutY="440.0" mnemonicParsing="false" prefWidth="78.0" style="-fx-background-color: #ffffff;" text="Consulting" textFill="#464e5f" />
+                  <CheckBox fx:id="financecheck" layoutX="624.0" layoutY="440.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Finance" textFill="#464e5f" />
+                  <CheckBox fx:id="industricheck" layoutX="537.0" layoutY="440.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Industriel" textFill="#464e5f" />
+                  <CheckBox fx:id="mecacheck" layoutX="700.0" layoutY="440.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Mécanique" textFill="#464e5f" />
+                  <TextField fx:id="descField" layoutX="489.0" layoutY="658.0" prefHeight="30.0" prefWidth="205.0" promptText="Espace Libre" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="381.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autres Domaine :" />
+                  <Text fill="#464e5f" layoutX="325.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresse de l'établissement :" />
+                  <TextField fx:id="autresField" layoutX="489.0" layoutY="474.0" prefHeight="30.0" prefWidth="205.0" promptText="Autres Domaine" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="391.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresse Email :" />
+                  <TextField fx:id="addressField" layoutX="489.0" layoutY="520.0" prefHeight="30.0" prefWidth="205.0" promptText="Adresse de l'établissement" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="346.0" layoutY="631.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numéro de téléphone :" />
+                  <TextField fx:id="numeroField" layoutX="489.0" layoutY="612.0" prefHeight="30.0" prefWidth="205.0" promptText="Numéro de téléphone" style="-fx-border-color: #E5EAEE;" />
+                  <TextField fx:id="emailField" layoutX="489.0" layoutY="567.0" prefHeight="30.0" prefWidth="205.0" promptText="Adresse Email" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="397.0" layoutY="678.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Espace libre :" />
+                  <Button fx:id="add_button" layoutX="428.0" layoutY="707.0" mnemonicParsing="false" onAction="#handleAdd" prefHeight="30.0" prefWidth="71.0" style="-fx-background-color: #3CE364;" text="ENVOYER" />
+                  <Button fx:id="cancel_button" layoutX="532.0" layoutY="707.0" mnemonicParsing="false" onAction="#GOTODISPLAY" prefHeight="30.0" prefWidth="71.0" style="-fx-background-color: #3CE364;" text="ANNULER" />
+                  <TextField fx:id="nomfield" layoutX="489.0" layoutY="250.0" prefHeight="30.0" prefWidth="205.0" promptText="Nom" style="-fx-border-color: #E5EAEE;" />
+                  <Text fill="#464e5f" layoutX="428.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prenom :" />
+                  <Button fx:id="add_button2" layoutX="440.0" layoutY="707.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" prefWidth="71.0" style="-fx-background-color: #3CE364;" text="submit" />
+               </children>
+               <padding>
+                  <Insets bottom="200.0" />
+               </padding>
+            </AnchorPane>
+         </children>
+      </VBox>
+    </children>
+</VBox>
