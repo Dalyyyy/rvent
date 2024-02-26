@@ -21,6 +21,8 @@ public class Event {
     private List<Room> rooms;
     private CheckListRSE checkListRSE;
     private Enterprise enterprise;
+    private List<Sponsoring> sponsoringRequests;
+
 
     public Event() {
     }
@@ -50,6 +52,10 @@ public class Event {
     public void setId(int id) {
         this.id = id;
     }
+    public void addSponsoringRequest(Sponsoring request) {
+        sponsoringRequests.add(request);
+    }
+
 
     public String getEventName() {
         return eventName;
