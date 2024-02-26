@@ -6,6 +6,7 @@ public class MediaProfile {
     private String description;
     private Event event;
 
+
     public MediaProfile() {
     }
 

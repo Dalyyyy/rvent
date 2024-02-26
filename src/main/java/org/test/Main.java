@@ -1,29 +1,19 @@
 package org.test;
 
+import org.entities.Event;
 import org.entities.User;
+import org.services.EventService;
 import org.services.UserService;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-
-        UserService userService = new UserService();
-        try{
-            userService.addOrganizer(new User("foulen11","falten111","f5oulen@falten","foulen007", LocalDate.of(1995, 8, 12)));
-
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
-
-
-        try{
-            System.out.println(userService.getAllUsers());
-
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
+    public static void main(String[] args) throws SQLException {
+        EventService e = new EventService();
+       //e.addEvent(new Event("3ersii",true,LocalDate.of(2024,03,27), LocalTime.of(21,10),100));
 
     }
 }

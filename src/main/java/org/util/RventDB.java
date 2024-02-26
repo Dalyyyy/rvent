@@ -10,9 +10,10 @@ public class RventDB {
     private final String PW = "";
     public Connection getConnection;
     private static RventDB instance;
+    private Connection connection;
 
 
-   private RventDB(){
+    private RventDB(){
        try{
            getConnection = DriverManager.getConnection(URL, USER, PW);
            System.out.println("connected successfully! ");
@@ -25,4 +26,12 @@ public class RventDB {
            instance= new RventDB();
        return instance;
    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }
