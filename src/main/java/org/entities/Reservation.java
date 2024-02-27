@@ -1,44 +1,30 @@
 package org.entities;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import java.sql.Time;
-import java.util.Date;
-import java.util.TimerTask;
 public class Reservation {
     private int id;
     private String fullName;
     private String eventName;
-    private Date date;
-    private Time time;
-    private User user;
-    private Event event;
+    private LocalDate date;
+    private LocalTime time;
 
-    public Reservation(int id, String fullName, Date date, Time time, User user, String eventName, Event event) {
+    public Reservation(int id, String fullName, String eventName, LocalDate date, LocalTime time) {
         this.id = id;
         this.fullName = fullName;
-        this.date = date;
-        this.time = time;
-        this.user = user;
         this.eventName = eventName;
-        this.event = event;
-    }
-
-    public Reservation() {
-    }
-
-    public Reservation(String fullName, Date date, Time time) {
-        this.fullName = fullName;
         this.date = date;
         this.time = time;
     }
+    public Reservation( String fullName, String eventName, LocalDate date, LocalTime time) {
 
-    public Reservation(String fullName, Date date, Time time, User user) {
         this.fullName = fullName;
+        this.eventName = eventName;
         this.date = date;
         this.time = time;
-        this.user = user;
     }
+    public Reservation() {}
 
     public int getId() {
         return id;
@@ -56,30 +42,6 @@ public class Reservation {
         this.fullName = fullName;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getEventName() {
         return eventName;
     }
@@ -88,12 +50,20 @@ public class Reservation {
         this.eventName = eventName;
     }
 
-    public Event getEvent() {
-        return event;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     @Override
@@ -101,9 +71,9 @@ public class Reservation {
         return "Reservation{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
+                ", eventName='" + eventName + '\'' +
                 ", date=" + date +
                 ", time=" + time +
-                ", user="+ user +
                 '}';
     }
 }
