@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SponService implements ISponsoring <Sponsoring>{
-
-
     private final Connection connection;
     public SponService() {connection = RventDB.getInstance().getConnection;
     }

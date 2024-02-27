@@ -4,6 +4,8 @@ import javafx.scene.text.Text;
 import org.entities.Sponsoring;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,9 +18,11 @@ import org.services.SponService;
 
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DevenirSponsorForm implements Initializable {
@@ -171,6 +175,8 @@ public class DevenirSponsorForm implements Initializable {
 
     }
     private static DevenirSponsorForm instance =new DevenirSponsorForm();
+
+
     public static DevenirSponsorForm getInstance() {
         return instance;
     }
@@ -249,6 +255,7 @@ public class DevenirSponsorForm implements Initializable {
     }
 
 
+
     @FXML
     public void GOTOADD(){
 
@@ -273,35 +280,73 @@ public class DevenirSponsorForm implements Initializable {
     }
 
     @FXML
-    public void handleAdd(){
-
+    public void handleAdd() {
+        // Récupérer les valeurs des champs
         String nom = nomfield.getText();
-        String prenom =  prenomfield.getText();
-        String nom_etab =  etablifield.getText();
-        String adresse =  addressField.getText();
-        int numero =  Integer.parseInt(numeroField.getText());
+        String prenom = prenomfield.getText();
+        String nom_etab = etablifield.getText();
+        String adresse = addressField.getText();
+        int numero = 0;
+        try {
+            numero = Integer.parseInt(numeroField.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Veuillez entrer un numéro valide.");
+            return; // Arrêter le traitement si le numéro n'est pas valide
+        }
         String email = emailField.getText();
-        String description =  descField.getText();
+        String description = descField.getText();
         String domaine = "azerty";
 
+        // Vérifier si les champs sont vides
+        if (nom.isEmpty() || prenom.isEmpty() || nom_etab.isEmpty() || adresse.isEmpty() || email.isEmpty() || description.isEmpty()) {
+            showAlert("Erreur", "Veuillez remplir tous les champs.");
+            return; // Arrêter le traitement si un champ est vide
+        }
 
-        Sponsoring sponsoring = new Sponsoring(-1, nom,nom_etab, prenom,domaine,adresse,email, Sponsoring.Tetab.entreprise,numero,description);
-        SponService sponService =new SponService();
+        // Vérifier si l'email est valide en utilisant une expression régulière
+        if (!isValidEmail(email)) {
+            showAlert("Erreur", "Veuillez entrer une adresse e-mail valide.");
+            return; // Arrêter le traitement si l'email n'est pas valide
+        }
+
+        // Vérifier si le numéro est un entier positif
+        if (numero <= 0) {
+            showAlert("Erreur", "Veuillez entrer un numéro valide.");
+            return; // Arrêter le traitement si le numéro n'est pas valide
+        }
+
+        // Créer un nouvel objet Sponsoring
+        Sponsoring sponsoring = new Sponsoring(-1, nom, nom_etab, prenom, domaine, adresse, email, Sponsoring.Tetab.entreprise, numero, description);
+        SponService sponService = new SponService();
 
         try {
+            // Ajouter le sponsoring à la base de données
             sponService.ajouter(sponsoring);
             System.out.println(nom);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-
         }
 
-        //  initAdminInputs();
-
+        // Aller à l'affichage des sponsorings
         GOTODISPLAY();
         reload_page();
-
     }
+
+    // Méthode pour vérifier si une adresse e-mail est valide en utilisant une expression régulière
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(regex);
+    }
+
+    // Méthode pour afficher une alerte
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     private void reload_page() {
         SponService sponService =new SponService();
