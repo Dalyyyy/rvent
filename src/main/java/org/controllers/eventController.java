@@ -1,9 +1,10 @@
-package main.projet;
+package org.controllers;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.fxml.FXML;
 import org.entities.Event;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -140,27 +141,111 @@ public class eventController implements Initializable {
         }
     }
 
-    @FXML
+   /* @FXML
     public void handleAddAdmin() {
-
-
-
+        // Retrieve input fields and checkbox states
         String eventname = eventNameField.getText();
         String description = DescField.getText();
         String nom_entreprise = entrepriseNameField.getText();
-        int nbrmax = Integer.parseInt(maxnbrField.getText());
-        boolean status = statusCheckbox.isSelected(); // Retrieve the selected state
-        boolean full = isfull_checkbox.isSelected(); // Retrieve the selected state
-
-        Event event = new Event(-1, full, eventname, description, status, nom_entreprise, nbrmax);
-        EventService eventService = new EventService();
+        int nbrmax;
 
         try {
+            nbrmax = Integer.parseInt(maxnbrField.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input: Please enter a valid integer for max number.");
+            return;  // Exit the method if input is invalid
+        }
+
+        boolean status = statusCheckbox.isSelected();
+        boolean full = isfull_checkbox.isSelected();
+
+        try {
+            // Validate input for event name and description
+            if (!eventname.matches("[a-zA-Z]+") || !description.matches("[a-zA-Z]+")) {
+                throw new IllegalArgumentException("Event name and description must contain only letters.");
+            }
+
+            // Validate input for enterprise name
+            if (!nom_entreprise.matches("[a-zA-Z]+")) {
+                throw new IllegalArgumentException("Enterprise name must contain only letters.");
+            }
+
+            // Create Event object
+            Event event = new Event(-1, full, eventname, description, status, nom_entreprise, nbrmax);
+            EventService eventService = new EventService();
+
+            // Add event
             eventService.addEvent(event);
+
+            // Print success message
+            System.out.println("Event added successfully!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input: " + e.getMessage());
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error adding event: " + e.getMessage());
+        }
+    }*/
+
+
+
+
+    @FXML
+    public void handleAddAdmin() {
+        // Retrieve input fields and checkbox states
+        String eventname = eventNameField.getText();
+        String description = DescField.getText();
+        String nom_entreprise = entrepriseNameField.getText();
+        int nbrmax;
+
+        try {
+            // Validate input for event name and description
+            if (!eventname.matches("[a-zA-Z]+") || !description.matches("[a-zA-Z]+")) {
+                throw new IllegalArgumentException("Event name and description must contain only letters.");
+            }
+            // Validate input for enterprise name
+            if (!nom_entreprise.matches("[a-zA-Z]+")) {
+                throw new IllegalArgumentException("Enterprise name must contain only letters.");
+            }
+
+        try {
+            nbrmax = Integer.parseInt(maxnbrField.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Invalid input", "Please enter a valid integer for max number.");
+            return;  // Exit the method if input is invalid
+        }
+
+        boolean status = statusCheckbox.isSelected();
+        boolean full = isfull_checkbox.isSelected();
+
+
+
+
+
+            // Create Event object
+            Event event = new Event(-1, full, eventname, description, status, nom_entreprise, nbrmax);
+            EventService eventService = new EventService();
+
+            // Add event
+            eventService.addEvent(event);
+
+            // Show success message
+            showAlert("Success", "Event added successfully!");
+        } catch (IllegalArgumentException e) {
+            showAlert("Invalid input", e.getMessage());
+        } catch (SQLException e) {
+            showAlert("Error", "An error occurred while adding the event: " + e.getMessage());
         }
     }
+
+    // Helper method to show an alert
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 
     @FXML
     public void addEventInterfacee() {
@@ -178,6 +263,7 @@ public class eventController implements Initializable {
         // show addeeventPage interface
         AddeventPagee.setVisible(true);
         AddeventPagee.setManaged(true);
+       /* reloadPage();*/
     }
 
     @FXML
@@ -208,10 +294,45 @@ public class eventController implements Initializable {
         accountTableView.setItems(events);
     }
 
-    /*reload_page(){
+  /*  void initialize() throws SQLException {
 
+        refreshPage();
+        refreshTimeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> refreshPage()));
+        refreshTimeline.setCycleCount(Timeline.INDEFINITE);
+        refreshTimeline.play();
+    }
+    private void refreshPage() {
+        try {
+            List<Event> categories = cs.recuperer();
+          EventContainer.getChildren().clear();
 
-
+            if (!categories.isEmpty()) {
+                int columnIndex = 0;
+                int rowIndex = 0;
+                for (Event event : events) {
+                    GridPane categoryPane = add_event(event);
+                    EventList.add(categoryPane, columnIndex, rowIndex);
+                    columnIndex++;
+                    if (columnIndex == 3) {
+                        columnIndex = 0;
+                        rowIndex++;
+                    }
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("No Products Found");
+                alert.setHeaderText(null);
+                alert.setContentText("No products found in the database.");
+                alert.showAndWait();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Error occurred while retrieving categories from the database.");
+            alert.showAndWait();
+        }
     }*/
 
     public Callback<TableColumn<Event, Void>, TableCell<Event, Void>> createButtonCellFactory() {
