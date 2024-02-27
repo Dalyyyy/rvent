@@ -1,7 +1,8 @@
 package org.entities;
 
 import jakarta.persistence.*;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Activity {
     private int id;
@@ -9,6 +10,8 @@ public class Activity {
     private String description;
     private boolean status;
     private Team team;
+
+    private List<Task> tasks;
 
     public Activity() {}
 
@@ -19,6 +22,10 @@ public class Activity {
         this.status = status;
         this.team = team;
     }
+
+    public Activity(int id, String title, String description, boolean status, String team, String task) {
+    }
+
 
     public int getId() {
         return id;
@@ -60,6 +67,14 @@ public class Activity {
         this.team = team;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTeam(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public String toString() {
         return "Activity{" +
@@ -68,6 +83,7 @@ public class Activity {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 ", team=" + team +
+                ", tasks=" + tasks +
                 '}';
     }
 }
