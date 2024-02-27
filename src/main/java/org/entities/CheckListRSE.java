@@ -1,7 +1,8 @@
 package org.entities;
 
 import java.util.List;
-public class CheckListRSE {
+public class
+CheckListRSE {
     private int id;
     private List<String> list;
     private int scoreRSE;
