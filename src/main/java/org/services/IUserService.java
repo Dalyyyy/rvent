@@ -1,6 +1,7 @@
 package org.services;
 
 import org.entities.Event;
+import org.entities.Role;
 import org.entities.User;
 
 import java.sql.SQLException;
@@ -8,8 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IUserService <U>{
-    void addOrganizer(User user) throws SQLException;
-    public void addAdmin(User user) throws SQLException;
+
+    void addUser(User user, Role role) throws SQLException;
 
     void updateUser(User user) throws SQLException;
 

@@ -1,10 +1,11 @@
 package org.services;
 
-import org.entities.Event;
 import org.entities.Role;
 import org.entities.User;
 import org.util.RventDB;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.Period;
@@ -18,13 +19,13 @@ public class UserService implements IUserService{
     }
     @Override
     public boolean authenticateUser(String email, String password) throws SQLException {
-        String sql = "SELECT * FROM user WHERE email = ?";
+        String sql = "SELECT password FROM user WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     String storedPassword = resultSet.getString("password");
-                    return storedPassword.equals(password);
+                    return verifyPassword(password, storedPassword);
                 }
             }
         }
@@ -36,13 +37,17 @@ public class UserService implements IUserService{
             throw new IllegalArgumentException("Password and confirmed password do not match.");
         }
 
+        if (emailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Email is already registered.");
+        }
+
         String sql = "INSERT INTO user (name, familyName, email, password, dateBirth, role) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getFamilyName());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(4, hashPassword(user.getPassword()));
             preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
             preparedStatement.setString(6, Role.CLIENT.name());
 
@@ -50,7 +55,11 @@ public class UserService implements IUserService{
         }
     }
     @Override
-    public void addOrganizer(User user) throws SQLException {
+    public void addUser(User user, Role role) throws SQLException {
+        if (emailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Email is already registered.");
+        }
+
         String sql = "INSERT INTO user (name, familyName, email, password, dateBirth, role) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -58,37 +67,27 @@ public class UserService implements IUserService{
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getFamilyName());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(4, hashPassword(user.getPassword()));
             preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
-            preparedStatement.setString(6, Role.ORGANIZER.name());
+            preparedStatement.setString(6, role.name());
 
             preparedStatement.executeUpdate();
         }
     }
-    @Override
-    public void addAdmin(User user) throws SQLException {
-        String sql = "INSERT INTO user (name, familyName, email, password, dateBirth, role) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getFamilyName());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
-            preparedStatement.setString(6, Role.ADMIN.name());
-
-            preparedStatement.executeUpdate();
-        }
-    }
     @Override
     public void updateUser(User user) throws SQLException {
+
+        if (emailExists(user.getEmail())) {
+            throw new IllegalArgumentException("Email is already registered.");
+        }
+
         String sql = "update user set name=? , familyName=? , email=? , password=? , dateBirth=? WHERE id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1,user.getName());
         preparedStatement.setString(2,user.getFamilyName());
         preparedStatement.setString(3,user.getEmail());
-        preparedStatement.setString(4,user.getPassword());
+        preparedStatement.setString(4, hashPassword(user.getPassword()));
         preparedStatement.setDate(5, java.sql.Date.valueOf(user.getDateBirth()));
         preparedStatement.setObject(6, user.getId());
         preparedStatement.executeUpdate();
@@ -130,6 +129,51 @@ public class UserService implements IUserService{
         LocalDate currentDate = LocalDate.now();
         return Period.between(birthDate, currentDate).getYears();
     }
+    public String hashPassword(String password) {
+        try {
+            // Use SHA-256 hashing algorithm
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = digest.digest(password.getBytes());
 
+            StringBuilder stringBuilder = new StringBuilder();
+            for (byte b : hashedBytes) {
+                stringBuilder.append(String.format("%02x", b));
+            }
+            return stringBuilder.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public boolean verifyPassword(String password, String storedPassword) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = digest.digest(password.getBytes());
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (byte b : hashedBytes) {
+                stringBuilder.append(String.format("%02x", b));
+            }
+            String hashedPassword = stringBuilder.toString();
+
+            return hashedPassword.equals(storedPassword);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean emailExists(String email) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
 
 }
