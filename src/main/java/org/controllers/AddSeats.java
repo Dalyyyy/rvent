@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -125,6 +127,7 @@ public class AddSeats {
     private Button showw;
 
 
+    private List<String> selectedSeatIds = new ArrayList<>();
 
 
     @FXML
@@ -148,6 +151,11 @@ public class AddSeats {
     }
 
 
+
+
+
+
+
     @FXML
     void show(ActionEvent event) {
         try {
@@ -161,7 +169,7 @@ public class AddSeats {
     @FXML
     void Confirmer(ActionEvent event) {
         try {
-            int id = Integer.parseInt(idid.getText());
+            int id = 0;
             String siddd = Sid.getText();
             seeats seat= new seeats(id,siddd);
             serviceseat sr = new serviceseat();
@@ -180,6 +188,7 @@ public class AddSeats {
     void goBack(ActionEvent event) {
 
     }
+
 
     @FXML
     void initialize() {
@@ -213,6 +222,72 @@ public class AddSeats {
         assert idid != null : "fx:id=\"idid\" was not injected: check your FXML file 'fakhribooking.fxml'.";
         assert selectedSeats != null : "fx:id=\"selectedSeats\" was not injected: check your FXML file 'fakhribooking.fxml'.";
 
-    }}
+        // Add event handlers to all seat buttons
+        A1.setOnAction(event -> handleSeatButtonClick(A1));
+        A2.setOnAction(event -> handleSeatButtonClick(A2));
+        A3.setOnAction(event -> handleSeatButtonClick(A3));
+        A4.setOnAction(event -> handleSeatButtonClick(A4));
+        A5.setOnAction(event -> handleSeatButtonClick(A5));
+        A6.setOnAction(event -> handleSeatButtonClick(A6));
+        A7.setOnAction(event -> handleSeatButtonClick(A7));
+        A8.setOnAction(event -> handleSeatButtonClick(A8));
+        B1.setOnAction(event -> handleSeatButtonClick(B1));
+        B2.setOnAction(event -> handleSeatButtonClick(B2));
+        B3.setOnAction(event -> handleSeatButtonClick(B3));
+        B4.setOnAction(event -> handleSeatButtonClick(B4));
+        B5.setOnAction(event -> handleSeatButtonClick(B5));
+        B6.setOnAction(event -> handleSeatButtonClick(B6));
+        B7.setOnAction(event -> handleSeatButtonClick(B7));
+        B8.setOnAction(event -> handleSeatButtonClick(B8));
+        C1.setOnAction(event -> handleSeatButtonClick(C1));
+        C2.setOnAction(event -> handleSeatButtonClick(C2));
+        C3.setOnAction(event -> handleSeatButtonClick(C3));
+        C4.setOnAction(event -> handleSeatButtonClick(C4));
+        C5.setOnAction(event -> handleSeatButtonClick(C5));
+        C6.setOnAction(event -> handleSeatButtonClick(C6));
+        C7.setOnAction(event -> handleSeatButtonClick(C7));
+        C8.setOnAction(event -> handleSeatButtonClick(C8));
+    }
+    private void handleSeatButtonClick(Button button) {
+        // Change the color of the button to green
+        button.setStyle("-fx-background-color: green");
+
+        // Get the ID of the selected seat
+        String seatId = button.getId();
+
+        // Append the selected seat ID to the list of selected seats
+        if (!selectedSeatIds.contains(seatId)) {
+            selectedSeatIds.add(seatId);
+        } else {
+            selectedSeatIds.remove(seatId);
+        }
+
+        // Update the fields with the selected seat IDs
+        updateFields();
+    }
+    private void updateFields() {
+        // Update the selectedSeats label with the IDs of the selected seats
+        StringBuilder seatsTextBuilder = new StringBuilder();
+        for (String seatId : selectedSeatIds) {
+            seatsTextBuilder.append(seatId).append(", ");
+        }
+        if (seatsTextBuilder.length() > 0) {
+            seatsTextBuilder.delete(seatsTextBuilder.length() - 2, seatsTextBuilder.length()); // Remove the last comma and space
+        }
+        selectedSeats.setText(seatsTextBuilder.toString());
+
+        // Update the Sid text field with the IDs of the selected seats
+        StringBuilder sidBuilder = new StringBuilder();
+        for (String seatId : selectedSeatIds) {
+            sidBuilder.append(seatId).append(", ");
+        }
+        if (sidBuilder.length() > 0) {
+            sidBuilder.delete(sidBuilder.length() - 2, sidBuilder.length()); // Remove the last comma and space
+        }
+        Sid.setText(sidBuilder.toString());
+    }
+
+
+}
 
 

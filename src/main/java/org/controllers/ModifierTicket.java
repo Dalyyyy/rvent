@@ -115,7 +115,7 @@ public class ModifierTicket {
             int adultTickets = Integer.parseInt(adultcombo.getText());
             int childTickets = Integer.parseInt(childcombo.getText());
             int seniorTickets = Integer.parseInt(seniorcombo.getText());
-            int id = Integer.parseInt(idd.getText());
+            int id = +1;
 
             java.util.Date utilDate = java.sql.Date.valueOf(dateRes);
             java.sql.Time sqlTime = java.sql.Time.valueOf(time1);

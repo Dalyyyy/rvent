@@ -1,19 +1,33 @@
 package org.controllers;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
-import javafx.scene.control.Alert;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import java.io.IOException;
+
+import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Base64;
+import java.util.Optional;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.entities.Tickets;
 import org.services.seviceticket;
@@ -60,6 +74,8 @@ public class ticket {
     private Text totalPrice;
     @FXML
     private Button modifier;
+    @FXML
+    private Button affs;
 
     @FXML
     void adultcombo(ActionEvent event) {
@@ -76,6 +92,7 @@ public class ticket {
         }
 
     }
+
     @FXML
     void modifier(ActionEvent event) {
         try {
@@ -87,34 +104,14 @@ public class ticket {
     }
 
     @FXML
-    void goToConfirmation(ActionEvent event) {
+    void affs(ActionEvent event) {
         try {
-            LocalDate dateRes = dateRES.getValue();
-            String time1 = time.getText();
-           // get.totprix= totalPrice.getText();
-            int adultTickets = Integer.parseInt(adultcombo.getText());
-            int childTickets = Integer.parseInt(childcombo.getText());
-            int seniorTickets = Integer.parseInt(seniorcombo.getText());
-            int id = Integer.parseInt(idd.getText());
-
-            java.util.Date utilDate = java.sql.Date.valueOf(dateRes);
-
-            java.sql.Time sqlTime = java.sql.Time.valueOf(time1);
-
-            Tickets t = new Tickets(id, 520, childTickets, seniorTickets, adultTickets,utilDate,sqlTime);
-            seviceticket sr = new seviceticket();
-            sr.insertOne(t);
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("SQL ERROR");
-            alert.show();
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("NUMBER FORMAT EXCEPTION");
-            alert.show();
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherSeats.fxml"));
+            affs.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
-
 
     @FXML
     void updateTotal(ActionEvent event) {
@@ -134,18 +131,145 @@ public class ticket {
         totalPrice.setText("Total Price: Dinar " + total);
     }
 
+
+
+        // Twilio credentials
+
+
+        @FXML
+        void goToConfirmation(ActionEvent event) throws IOException {
+            try {
+                LocalDate dateRes = dateRES.getValue();
+                String time1 = time.getText();
+                // int totprix= Integer.parseInt(this.totalPrice.getText());
+                int adultTickets = Integer.parseInt(adultcombo.getText());
+                int childTickets = Integer.parseInt(childcombo.getText());
+                int seniorTickets = Integer.parseInt(seniorcombo.getText());
+                int id = +1;
+
+                java.util.Date utilDate = java.sql.Date.valueOf(dateRes);
+
+                java.sql.Time sqlTime = java.sql.Time.valueOf(time1);
+
+                Tickets t = new Tickets(id, 0, childTickets, seniorTickets, adultTickets, utilDate, sqlTime);
+                seviceticket sr = new seviceticket();
+                sr.insertOne(t);
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("SQL ERROR");
+                alert.show();
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("NUMBER FORMAT EXCEPTION");
+                alert.show();
+            }
+            TextInputDialog phoneNumberDialog = new TextInputDialog();
+            phoneNumberDialog.setTitle("Phone Number Confirmation");
+            phoneNumberDialog.setHeaderText(null);
+            phoneNumberDialog.setContentText("Please enter your phone number:");
+
+            Optional<String> phoneNumberResult = phoneNumberDialog.showAndWait();
+            if (phoneNumberResult.isPresent()) {
+                String phoneNumber = phoneNumberResult.get();
+                if (isValidPhoneNumber(phoneNumber)) {
+                    String confirmationCode = generateConfirmationCode(); // Generate confirmation code
+                    boolean confirmationSent = sendConfirmationCode(phoneNumber, confirmationCode);
+                    if (confirmationSent) {
+                        // Prompt user to enter the received confirmation code
+                        TextInputDialog confirmationCodeDialog = new TextInputDialog();
+                        confirmationCodeDialog.setTitle("Confirmation Code");
+                        confirmationCodeDialog.setHeaderText(null);
+                        confirmationCodeDialog.setContentText("Please enter the confirmation code sent to your phone:");
+
+                        Optional<String> confirmationCodeResult = confirmationCodeDialog.showAndWait();
+                        if (confirmationCodeResult.isPresent()) {
+                            String enteredCode = confirmationCodeResult.get();
+                            if (enteredCode.equals(confirmationCode)) {
+                                // Confirmation code matches, proceed with confirmation
+                                // Your confirmation logic here
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Invalid Confirmation Code");
+                                alert.setHeaderText(null);
+                                alert.setContentText("The entered confirmation code is incorrect.");
+                                alert.showAndWait();
+                            }
+                        } else {
+                            // User canceled entering the confirmation code
+                            // Handle as needed
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Confirmation Code Sending Failed");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Failed to send the confirmation code. Please try again later.");
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Invalid Phone Number");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please enter a valid phone number.");
+                    alert.showAndWait();
+                }
+            } else {
+                // User canceled entering the phone number
+                // Handle as needed
+            }
+        }
+
+        private boolean isValidPhoneNumber(String phoneNumber) {
+            // Implement phone number validation logic here
+            // You can use regular expressions or other validation methods
+            return phoneNumber.matches("\\d{8}"); // Example: 10-digit phone number
+        }
+
+        private String generateConfirmationCode() {
+            Random random = new Random();
+            int code = 100000 + random.nextInt(900000); // Generates a random number between 100000 and 999999
+            return String.valueOf(code);
+        }
+
+    public boolean sendConfirmationCode(String phoneNumber, String confirmationCode) throws IOException {
+        try {
+             final String ACCOUNT_SID = "AC2e6d3814f509f4df914a32a6dd1433d6";
+            final String AUTH_TOKEN = "039f91859dc7b9fde20279f96fec74f5";
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            String messageBody = "Your confirmation code is: " + confirmationCode;
+
+            Message message = Message.creator(
+                            new com.twilio.type.PhoneNumber("+216"+phoneNumber),
+                            new com.twilio.type.PhoneNumber("+18722013339"),
+                            messageBody)
+                    .create();
+
+            System.out.println(message.getSid());
+            if (message.getSid() != null) {
+                // Message sent successfully
+                return true;
+            } else {
+                // Failed to send message
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     @FXML
     void delete(ActionEvent event) {
 
-            idd.clear();
-            adultcombo.clear();
-            childcombo.clear();
-            seniorcombo.clear();
-            time.clear();
-            totalPrice.setText("");
+        idd.clear();
+        adultcombo.clear();
+        childcombo.clear();
+        seniorcombo.clear();
+        time.clear();
+        totalPrice.setText("");
 
 
     }
+
     @FXML
     void afficher(ActionEvent event) {
         try {
@@ -155,6 +279,16 @@ public class ticket {
             System.err.println(e.getMessage());
         }
     }
+
+
+
+
+
+
+
+
+
+
 
     @FXML
     void initialize() {

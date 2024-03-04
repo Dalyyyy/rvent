@@ -3,23 +3,60 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="495.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.AfficherRes">
     <children>
-        <AnchorPane prefHeight="539.0" prefWidth="898.0">
+        <AnchorPane prefHeight="539.0" prefWidth="898.0" style="-fx-background-color: green;">
             <children>
                 <AnchorPane layoutX="-4.0" layoutY="-1.0" prefHeight="119.0" prefWidth="903.0" style="-fx-background-color: #008000;">
                     <children>
                         <Label fx:id="userIdLabel" layoutX="606.0" layoutY="19.0" prefHeight="37.0" prefWidth="81.0" />
-                        <Button fx:id="idRetour" layoutX="36.0" layoutY="37.0" mnemonicParsing="false" onAction="#Retour" prefHeight="38.0" prefWidth="96.0" text="retour" />
+                  <Text layoutX="14.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vos Reéservation :" wrappingWidth="240.4664306640625">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
                     </children>
                 </AnchorPane>
-                <FlowPane fx:id="RestoContainer" hgap="20" layoutY="115.0" prefHeight="28.0" prefWidth="894.0" vgap="20" />
-                <Button fx:id="idAjouter" layoutX="263.0" layoutY="454.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="26.0" prefWidth="88.0" text="Ajouter" />
-                <Button fx:id="idModifier" layoutX="363.0" layoutY="455.0" mnemonicParsing="false" onAction="#modifier" prefHeight="26.0" prefWidth="96.0" text="Modifier" />
-                <Button layoutX="673.0" layoutY="409.0" mnemonicParsing="false" onAction="#OnRefresh" prefHeight="26.0" prefWidth="88.0" text="Refresh" />
-                <Button fx:id="idSupp" layoutX="475.0" layoutY="454.0" mnemonicParsing="false" onAction="#supprimerRes" prefHeight="26.0" prefWidth="96.0" text="supprimer" />
+                <Button fx:id="idModifier" layoutX="485.0" layoutY="480.0" mnemonicParsing="false" onAction="#modifier" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: darkgreen;" text="Modifier" />
+                <Button layoutX="797.0" layoutY="454.0" mnemonicParsing="false" onAction="#OnRefresh" prefHeight="26.0" prefWidth="88.0" style="-fx-background-color: darkgreen;" text="Refresh" />
+                <Button fx:id="idSupp" layoutX="602.0" layoutY="480.0" mnemonicParsing="false" onAction="#supprimerRes" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: dark green;" text="supprimer" />
+            <GridPane fx:id="gridfak" layoutX="224.0" layoutY="64.0" prefHeight="343.0" prefWidth="656.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.79998779296875" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.5999755859375" minWidth="10.0" prefWidth="82.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.800048828125" minWidth="10.0" prefWidth="82.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="53.800018310546875" minHeight="10.0" prefHeight="53.800018310546875" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="52.199981689453125" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="36.199987792968756" minHeight="10.0" prefHeight="33.00000610351563" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.79999389648438" minHeight="10.0" prefHeight="37.79999389648438" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+                <Button fx:id="idAjouter" layoutX="14.0" layoutY="236.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Ajouter une Autre Réservation " textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
+                  <Button fx:id="idRetour" layoutX="14.0" layoutY="184.0" mnemonicParsing="false" onAction="#Retour" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Back " textFill="WHITE" />
+            <Button fx:id="telecharger" layoutX="192.0" layoutY="468.0" mnemonicParsing="false" onAction="#telecharger" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Telecharger " textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>

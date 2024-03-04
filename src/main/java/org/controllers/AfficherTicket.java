@@ -1,25 +1,40 @@
 package org.controllers;
+import org.entities.Tickets;
+import javafx.scene.Node;
 
+import java.util.*;
+
+import org.services.seviceticket;
+import org.controllers.DatabaseHelper;
+import java.sql.SQLException;
+import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import org.entities.Tickets;
+import org.services.seviceticket;
+import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-        import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import org.entities.Tickets;
-import org.services.seviceticket;
 
 public class AfficherTicket {
-    private final   seviceticket  st = new seviceticket();
     @FXML
     private ResourceBundle resources;
 
@@ -33,13 +48,231 @@ public class AfficherTicket {
     private Button delete;
 
     @FXML
-    private ListView<Tickets> listTicket;
+    private GridPane gridfak;
 
     @FXML
     private Button modifier;
 
     @FXML
+    private Button show;
+    @FXML
+    private Button trier1;
+
+    @FXML
+    private Button trier2;
+
+    @FXML
     void Modifier(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/ModifierTicket.fxml"));
+            modifier.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }      }
+
+    @FXML
+    void back(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fakhri ticket.fxml"));
+            modifier.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }    }
+    @FXML
+    void trierplusancien(ActionEvent event) {
+        List<Tickets> tickets = DatabaseHelper.getTickets();
+        tickets.sort(Comparator.comparing(Tickets::getDate)); // Assuming getDate() returns a LocalDate
+        clearGrid();
+        populateGrid(tickets);
+    }
+    private void populateGrid(List<Tickets> tickets) {
+        int rowIndex = 0;
+        for (Tickets ticket : tickets) {
+            gridfak.add(new Label(String.valueOf(ticket.getTotprix())), 0, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getNbrchild())), 1, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getNbrsen())), 2, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getNbradul())), 3, rowIndex);
+            gridfak.add(new Label(ticket.getTime().toString()), 4, rowIndex);
+            gridfak.add(new Label(ticket.getDate().toString()), 5, rowIndex);
+
+            rowIndex++;
+        }
+    }
+    private void clearGrid() {        gridfak.getChildren().clear();
+
+
+    }
+
+    @FXML
+    void trierplusrécent(ActionEvent event) {
+        List<Tickets> tickets = DatabaseHelper.getTickets();
+
+        // Sort the tickets by date in descending order
+        tickets.sort(Comparator.comparing(Tickets::getDate).reversed());
+
+        // Clear the grid
+        clearGrid();
+
+        // Populate the grid with the sorted tickets
+        populateGrid(tickets);
+    }
+
+   // @FXML
+   //void delete(ActionEvent event) {
+
+    //}
+
+
+
+    //
+    @FXML
+    void Back(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fakhri ticket.fxml"));
+            back.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    @FXML
+    void show(ActionEvent event) {
+// Clear existing data in the grid
+        gridfak.getChildren().clear();
+
+        // Retrieve the tickets from the database
+        List<Tickets> tickets = DatabaseHelper.getTickets();
+
+        int rowIndex = 0; // Initialize the row index
+
+        // Add column headers
+       // gridfak.add(new Label("ID"), 0, rowIndex);
+        gridfak.add(new Label("Total Price"), 0, rowIndex);
+        gridfak.add(new Label("Total Price"), 0, rowIndex);
+        gridfak.add(new Label("Child Tickets"), 1, rowIndex);
+        gridfak.add(new Label("Senior Tickets"), 2, rowIndex);
+        gridfak.add(new Label("Adult Tickets"), 3, rowIndex);
+        gridfak.add(new Label("Time"), 4, rowIndex);
+        gridfak.add(new Label("Date"), 5, rowIndex);
+
+        rowIndex++; // Move to the next row for data
+
+        // Populate the grid with ticket information
+        for (Tickets ticket : tickets) {
+            //gridfak.add(new Label(String.valueOf(ticket.getId())), 0, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getTotprix())), 0, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getNbrchild())), 1, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getNbrsen())), 2, rowIndex);
+            gridfak.add(new Label(String.valueOf(ticket.getNbradul())), 3, rowIndex);
+            gridfak.add(new Label(ticket.getTime().toString()), 4, rowIndex);
+            gridfak.add(new Label(ticket.getDate().toString()), 5, rowIndex);
+
+            rowIndex++; // Move to the next row
+        }
+    }
+
+
+
+   /* @FXML
+    void initialize() {
+
+    }
+}*/
+    private seviceticket ticketService;
+
+    @FXML
+    void delete(ActionEvent event) {
+        if (selectedRowIndex != -1) {
+            // Get ticket details from the selected row
+            Node node = getNodeFromGridPane(selectedRowIndex, 0); // Assuming ID is in column 0
+            int ticketId = Integer.parseInt(((Label) node).getText());
+
+            try {
+                // Delete ticket from the database
+                Tickets ticketToDelete = new Tickets(); // Create a new instance
+                ticketToDelete.setId(ticketId); // Set the ticket ID
+                ticketService.deleteOne(ticketToDelete);
+
+                // Remove ticket row from the GridPane
+                gridfak.getChildren().removeIf(n -> GridPane.getRowIndex(n) == selectedRowIndex);
+
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Ticket deleted successfully.");
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete ticket: " + e.getMessage());
+            }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Please select a ticket to delete.");
+        }
+    }
+
+    // Method to get a node from the GridPane by row and column indices
+    private Node getNodeFromGridPane(int row, int column) {
+        for (Node node : gridfak.getChildren()) {
+            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    // Method to show an alert
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
+    void initialize() {
+        ticketService = new seviceticket();
+        populateGrid();
+    }
+
+    // Method to populate the GridPane with ticket information
+    private void populateGrid() {
+        List<Tickets> tickets;
+        try {
+            tickets = ticketService.selectAll();
+
+            int rowIndex = 0;
+            for (Tickets ticket : tickets) {
+                gridfak.add(new Label(String.valueOf(ticket.getTotprix())), 0, rowIndex);
+                gridfak.add(new Label(String.valueOf(ticket.getNbrchild())), 1, rowIndex);
+                gridfak.add(new Label(String.valueOf(ticket.getNbrsen())), 2, rowIndex);
+                gridfak.add(new Label(String.valueOf(ticket.getNbradul())), 3, rowIndex);
+                gridfak.add(new Label(ticket.getTime().toString()), 4, rowIndex);
+                gridfak.add(new Label(ticket.getDate().toString()), 5, rowIndex);
+
+                rowIndex++;
+            }
+
+            // Add event handlers to select row on mouse click
+            gridfak.getChildren().forEach(node -> {
+                node.setOnMouseClicked(e -> {
+                    selectedRowIndex = GridPane.getRowIndex(node);
+                });
+            });
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch tickets: " + e.getMessage());
+        }
+    }
+
+    private int selectedRowIndex = -1; // Track the selected row index
+}
+
+
+
+
+
+
+
+
+
+
+
+//@FXML
+  /*  void Modifier(ActionEvent event) {
         Tickets selectedTicket = listTicket.getSelectionModel().getSelectedItem();
         if (selectedTicket != null) {
             // L'objet Commande est sélectionné, vous pouvez maintenant l'utiliser comme vous le souhaitez
@@ -54,8 +287,8 @@ public class AfficherTicket {
             ToModifierListTicket(); ;
         }
     }
-    public void ToModifierListTicket() {
-       /* try {
+   /* public void ToModifierListTicket() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierTicket.fxml"));
             Parent root = loader.load();
           //  ModifierTicket ModifierController = loader.getController();
@@ -66,10 +299,10 @@ public class AfficherTicket {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-    }
+        }
+    }*/
 
-    @FXML
+   /* @FXML
     void delete(ActionEvent event) {
         Tickets TicketASup = listTicket.getSelectionModel().getSelectedItem();
 
@@ -148,15 +381,15 @@ public class AfficherTicket {
         });
     }
 
-    private void afficherAlerte(Alert.AlertType type, String titre, String contenu) {
+   private void afficherAlerte(Alert.AlertType type, String titre, String contenu) {
         Alert alert = new Alert(type);
         alert.setTitle(titre);
         alert.setHeaderText(null);
         alert.setContentText(contenu);
         alert.showAndWait();
     }
-    private void switchToUpdatePage(Tickets Tick) {
-/*
+    /*private void switchToUpdatePage(Tickets Tick) {
+
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierCommandeFXML.fxml"));
@@ -170,15 +403,13 @@ public class AfficherTicket {
             stage.show();
         } catch (IOException e) {
             afficherAlerte(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement de la page de modification : " + e.getMessage());
-        */}
-    @FXML
-    void back(ActionEvent event) {
+       /**/
+  //  @FXML
+   /* void back(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fakhri ticket.fxml"));
             back.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        }
-    }
+        }*/
 
-}

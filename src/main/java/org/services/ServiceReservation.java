@@ -31,13 +31,13 @@ public class ServiceReservation implements CRUD<Reservation > {
          st.executeUpdate();
      }*/
     public void insertOne(Reservation reservation) throws SQLException {
-        String req = "INSERT INTO reservation (fullName, eventName, date, time) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO reservation (id,fullName, eventName, date, time) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement st = getConnection.prepareStatement(req);
-
-        st.setString(1, reservation.getFullName());
-        st.setString(2, reservation.getEventName());
-        st.setDate(3, java.sql.Date.valueOf(reservation.getDate())); // Convert LocalDate to java.sql.Date
-        st.setTime(4, java.sql.Time.valueOf(reservation.getTime())); // Convert LocalTime to java.sql.Time
+        st.setInt(1,reservation.getId());
+        st.setString(2, reservation.getFullName());
+        st.setString(3, reservation.getEventName());
+        st.setDate(4, java.sql.Date.valueOf(reservation.getDate())); // Convert LocalDate to java.sql.Date
+        st.setTime(5, java.sql.Time.valueOf(reservation.getTime())); // Convert LocalTime to java.sql.Time
 
         st.executeUpdate();
     }

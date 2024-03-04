@@ -78,4 +78,6 @@ public class Tickets{
     public void setTime(Time time) {
         this.time = time;
     }
+
+
 }
