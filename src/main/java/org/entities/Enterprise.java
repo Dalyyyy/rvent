@@ -8,6 +8,7 @@ public class Enterprise {
     private String description;
     private String email;
     private String password;
+    private int phoneNumber;
     private List<Event> events;
     private List<sponsoringRequest> sponsoringRequests;
 
@@ -25,12 +26,25 @@ public class Enterprise {
         this.sponsoringRequests = sponsoringRequests;
     }
 
+    public Enterprise( String fullName, String description, String email, String password) {
+        this.fullName = fullName;
+        this.description = description;
+        this.email = email;
+        this.password = password;
+    }
+
     public Enterprise(int id, String fullName ,String description, String email, String password) {
         this.id = id;
         this.fullName = fullName;
         this.description = description;
         this.email = email;
         this.password = password;
+    }
+
+    public Enterprise(String enterpriseName, String enterpriseEmail, String enterprisePassword) {
+        this.fullName=enterpriseName;
+        this.email=enterpriseEmail;
+        this.password=enterprisePassword;
     }
 
     public int getId() {
@@ -59,6 +73,14 @@ public class Enterprise {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setEmail(String email) {

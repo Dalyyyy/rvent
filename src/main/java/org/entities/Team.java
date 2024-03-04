@@ -30,6 +30,11 @@ public class Team {
         this.teamName = teamName;
     }
 
+    public Team(String teamName, int id) {
+        this.teamName = teamName;
+        this.id=id;
+    }
+
     public int getId() {
         return id;
     }

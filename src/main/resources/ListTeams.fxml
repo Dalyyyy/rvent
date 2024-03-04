@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="609.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.ListTeamsController">
+    <children>
+        <VBox fx:id="ListTeams" prefHeight="609.0" prefWidth="768.0" xmlns:fx="http://javafx.com/fxml/1" >
+                <children>
+                    <TableView fx:id="teamTableView" layoutX="22.0" layoutY="89.0" prefHeight="362.0" prefWidth="658.0">
+                        <columns>
+                            <TableColumn fx:id="teamNameColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" text="Team Name" />
+                            <TableColumn fx:id="memberCountColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" text="Number of Members" />
+                        </columns>
+                    </TableView>
+                    <Button fx:id="reloadTeamsButton" layoutX="109.0" layoutY="487.0" mnemonicParsing="false" text="Reload Teams" />
+                    <Button fx:id="onClickAddTeam" layoutX="213.0" layoutY="487.0" mnemonicParsing="false" onAction="#addTeam" text="Add Team" />
+                    <Button fx:id="onClickDeleteTeam" layoutX="362.0" layoutY="487.0" mnemonicParsing="false" onAction="#deleteTeam" text="Delete Team" />
+                    <Button fx:id="onClickEditTeam" layoutX="497.0" layoutY="487.0" mnemonicParsing="false" onAction="#editTeam" text="Edit Team" />
+                </children>
+        </VBox>
+    </children>
+</AnchorPane>
