@@ -226,6 +226,7 @@ public class AfficherSeats {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+
     }
     @FXML
     void delete(ActionEvent event) {

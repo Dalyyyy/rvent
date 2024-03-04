@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReservation.fxml"));
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/fakhri ticket.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReservation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fakhri ticket.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setTitle("create new user ");

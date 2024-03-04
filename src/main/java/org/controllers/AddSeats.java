@@ -1,11 +1,14 @@
 package org.controllers;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.*;
+import org.util.RventDB;
+import org.util.RventDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -23,6 +26,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.entities.seeats;
 import org.services.serviceseat;
+import org.entities.Tickets;
+import org.util.RventDB;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import java.util.List;
 public class AddSeats {
 
 
@@ -129,6 +143,7 @@ public class AddSeats {
 
     private List<String> selectedSeatIds = new ArrayList<>();
 
+    private Connection getConnection;
 
     @FXML
     void cancel(ActionEvent event) {
@@ -191,7 +206,7 @@ public class AddSeats {
 
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         assert A1 != null : "fx:id=\"A1\" was not injected: check your FXML file 'fakhribooking.fxml'.";
         assert A2 != null : "fx:id=\"A2\" was not injected: check your FXML file 'fakhribooking.fxml'.";
         assert A3 != null : "fx:id=\"A3\" was not injected: check your FXML file 'fakhribooking.fxml'.";
@@ -247,7 +262,56 @@ public class AddSeats {
         C6.setOnAction(event -> handleSeatButtonClick(C6));
         C7.setOnAction(event -> handleSeatButtonClick(C7));
         C8.setOnAction(event -> handleSeatButtonClick(C8));
+        List<String> chosenSeatNames = getChosenSeatNamesFromDatabase();
+
+        // Iterate through all seat buttons and update their colors based on their chosen status
+        for (Button button : Arrays.asList(A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, C1, C2, C3, C4, C5, C6, C7, C8)) {
+            String seatId = button.getId();
+            if (chosenSeatNames.contains(seatId)) {
+                // If the seat is chosen, set its color to red
+                button.setStyle("-fx-background-color: red");
+            } else {
+                // If the seat is not chosen, set its color to default (you can adjust this color as needed)
+                button.setStyle("-fx-background-color: green");
+            }
+
+            // Add event handler for each button to handle seat selection
+            button.setOnAction(event -> handleSeatButtonClick(button));
+        }
+        }
+
+
+
+
+    private List<String> getChosenSeatNamesFromDatabase() {
+        List<String> chosenSeatNames = new ArrayList<>();
+        try (Connection connection = RventDB.getInstance().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT `seat_name` FROM `seats`")) {
+            while (resultSet.next()) {
+                chosenSeatNames.add(resultSet.getString("seat_name"));
+            }
+        } catch (SQLException e) {
+            // Handle any SQL exception
+            e.printStackTrace(); // You might want to log the exception instead of printing it
+        }
+        return chosenSeatNames;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    private void showAlert(Alert.AlertType alertType, String databaseError, String s) {
+    }
+
     private void handleSeatButtonClick(Button button) {
         // Change the color of the button to green
         button.setStyle("-fx-background-color: green");
