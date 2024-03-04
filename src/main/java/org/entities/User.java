@@ -4,6 +4,8 @@ package org.entities;
 import java.time.LocalDate;
 
 import java.util.Calendar;
+import java.util.ArrayList;
+
 import java.util.List;
 
 public class User {
@@ -13,22 +15,25 @@ public class User {
     private String email;
     private String password;
     private LocalDate dateBirth;
+    private int phoneNumber;
     private int reservationNbr;
     private Role roleUser;
     private List<Reservation> reservations;
     private Team team;
     private List<Notification> notifications;
     private List<Reclamation> reclamations;
+    private VerificationCode verificationCode;
 
-    public User(String name, String familyName, String email, String password, LocalDate dateBirth) {
+    public User(String name, String familyName, String email, String password, LocalDate dateBirth,int phoneNumber) {
         this.name = name;
         this.familyName = familyName;
         this.email = email;
         this.password = password;
         this.dateBirth = dateBirth;
+        this.phoneNumber = phoneNumber;
     }
 
-    public User(int id, String name, String familyName, String email, String password, LocalDate dateBirth, int reservationNbr) {
+    public User(int id, String name, String familyName, String email, String password, LocalDate dateBirth, Role roleUser, int reservationNbr, int phoneNumber) {
         this.id = id;
         this.name = name;
         this.familyName = familyName;
@@ -36,10 +41,22 @@ public class User {
         this.password = password;
         this.dateBirth = dateBirth;
         this.reservationNbr = reservationNbr;
+        this.roleUser = roleUser;
+        this.phoneNumber = phoneNumber;
+    }
+    public User(int id, String name, String familyName, String email, String password, Role role, int reservationNbr, int phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.familyName = familyName;
+        this.email = email;
+        this.password = password;
+        this.roleUser = role;
+        this.reservationNbr = reservationNbr;
+        this.phoneNumber = phoneNumber;
     }
 
     public User() {
-
+        this.reservations = new ArrayList<>();
     }
 
 
@@ -93,7 +110,7 @@ public class User {
     }
 
     public int getReservationNbr() {
-        return reservationNbr;
+        return reservations.size();
     }
 
     public void setReservationNbr(int reservationNbr) {
@@ -139,6 +156,23 @@ public class User {
     public void setReclamations(List<Reclamation> reclamations) {
         this.reclamations = reclamations;
     }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public VerificationCode getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(VerificationCode verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
 
     @Override
     public String toString() {
