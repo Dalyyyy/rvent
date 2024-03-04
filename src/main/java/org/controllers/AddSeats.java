@@ -191,13 +191,22 @@ public class AddSeats {
             sr.insertOne(seat);
             String total=Sid.getText();
             selectedSeats.setText(total);
+
+            // Show confirmation message
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Confirmation faite!");
+            alert.showAndWait();
+
         } catch (NumberFormatException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("NUMBER FORMAT EXCEPTION");
             alert.show();
-
         }
     }
+
+
 
     @FXML
     void goBack(ActionEvent event) {
@@ -267,11 +276,20 @@ public class AddSeats {
         // Iterate through all seat buttons and update their colors based on their chosen status
         for (Button button : Arrays.asList(A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, C1, C2, C3, C4, C5, C6, C7, C8)) {
             String seatId = button.getId();
-            if (chosenSeatNames.contains(seatId)) {
-                // If the seat is chosen, set its color to red
+            // Check if any of the seat IDs associated with this button are chosen
+            boolean isChosen = false;
+            for (String chosenSeatName : chosenSeatNames) {
+                // Split the chosenSeatName string into individual seat IDs
+                String[] seatIds = chosenSeatName.split(", ");
+                if (Arrays.asList(seatIds).contains(seatId)) {
+                    isChosen = true;
+                    break;
+                }
+            }
+            // Update the button color based on whether it's chosen or not
+            if (isChosen) {
                 button.setStyle("-fx-background-color: red");
             } else {
-                // If the seat is not chosen, set its color to default (you can adjust this color as needed)
                 button.setStyle("-fx-background-color: green");
             }
 
@@ -314,7 +332,7 @@ public class AddSeats {
 
     private void handleSeatButtonClick(Button button) {
         // Change the color of the button to green
-        button.setStyle("-fx-background-color: green");
+        button.setStyle("-fx-background-color: white");
 
         // Get the ID of the selected seat
         String seatId = button.getId();

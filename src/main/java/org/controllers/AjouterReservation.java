@@ -53,6 +53,11 @@ public class AjouterReservation {
             Reservation reservation = new Reservation(id, nomRes, nomEvent, dateRes, time);
             ServiceReservation sr = new ServiceReservation();
             sr.insertOne(reservation);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText(" C bon merci !");
+            alert.showAndWait();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("SQL ERROR");

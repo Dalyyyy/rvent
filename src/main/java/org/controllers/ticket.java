@@ -136,89 +136,97 @@ public class ticket {
         // Twilio credentials
 
 
-        @FXML
-        void goToConfirmation(ActionEvent event) throws IOException {
-            try {
-                LocalDate dateRes = dateRES.getValue();
-                String time1 = time.getText();
-                // int totprix= Integer.parseInt(this.totalPrice.getText());
-                int adultTickets = Integer.parseInt(adultcombo.getText());
-                int childTickets = Integer.parseInt(childcombo.getText());
-                int seniorTickets = Integer.parseInt(seniorcombo.getText());
-                int id = +1;
+    @FXML
+    void goToConfirmation(ActionEvent event) throws IOException {
+        try {
+            LocalDate dateRes = dateRES.getValue();
+            String time1 = time.getText();
+            // int totprix= Integer.parseInt(this.totalPrice.getText());
+            int adultTickets = Integer.parseInt(adultcombo.getText());
+            int childTickets = Integer.parseInt(childcombo.getText());
+            int seniorTickets = Integer.parseInt(seniorcombo.getText());
+            int id = +1;
 
-                java.util.Date utilDate = java.sql.Date.valueOf(dateRes);
+            java.util.Date utilDate = java.sql.Date.valueOf(dateRes);
 
-                java.sql.Time sqlTime = java.sql.Time.valueOf(time1);
+            java.sql.Time sqlTime = java.sql.Time.valueOf(time1);
 
-                Tickets t = new Tickets(id, 0, childTickets, seniorTickets, adultTickets, utilDate, sqlTime);
-                seviceticket sr = new seviceticket();
-                sr.insertOne(t);
-            } catch (SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("SQL ERROR");
-                alert.show();
-            } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("NUMBER FORMAT EXCEPTION");
-                alert.show();
-            }
-            TextInputDialog phoneNumberDialog = new TextInputDialog();
-            phoneNumberDialog.setTitle("Phone Number Confirmation");
-            phoneNumberDialog.setHeaderText(null);
-            phoneNumberDialog.setContentText("Please enter your phone number:");
+            Tickets t = new Tickets(id, 0, childTickets, seniorTickets, adultTickets, utilDate, sqlTime);
+            seviceticket sr = new seviceticket();
+            sr.insertOne(t);
 
-            Optional<String> phoneNumberResult = phoneNumberDialog.showAndWait();
-            if (phoneNumberResult.isPresent()) {
-                String phoneNumber = phoneNumberResult.get();
-                if (isValidPhoneNumber(phoneNumber)) {
-                    String confirmationCode = generateConfirmationCode(); // Generate confirmation code
-                    boolean confirmationSent = sendConfirmationCode(phoneNumber, confirmationCode);
-                    if (confirmationSent) {
-                        // Prompt user to enter the received confirmation code
-                        TextInputDialog confirmationCodeDialog = new TextInputDialog();
-                        confirmationCodeDialog.setTitle("Confirmation Code");
-                        confirmationCodeDialog.setHeaderText(null);
-                        confirmationCodeDialog.setContentText("Please enter the confirmation code sent to your phone:");
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("SQL ERROR");
+            alert.show();
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("NUMBER FORMAT EXCEPTION");
+            alert.show();
+        }
+        TextInputDialog phoneNumberDialog = new TextInputDialog();
+        phoneNumberDialog.setTitle("Phone Number Confirmation");
+        phoneNumberDialog.setHeaderText(null);
+        phoneNumberDialog.setContentText("Please enter your phone number:");
 
-                        Optional<String> confirmationCodeResult = confirmationCodeDialog.showAndWait();
-                        if (confirmationCodeResult.isPresent()) {
-                            String enteredCode = confirmationCodeResult.get();
-                            if (enteredCode.equals(confirmationCode)) {
-                                // Confirmation code matches, proceed with confirmation
-                                // Your confirmation logic here
-                            } else {
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setTitle("Invalid Confirmation Code");
-                                alert.setHeaderText(null);
-                                alert.setContentText("The entered confirmation code is incorrect.");
-                                alert.showAndWait();
-                            }
+        Optional<String> phoneNumberResult = phoneNumberDialog.showAndWait();
+        if (phoneNumberResult.isPresent()) {
+            String phoneNumber = phoneNumberResult.get();
+            if (isValidPhoneNumber(phoneNumber)) {
+                String confirmationCode = generateConfirmationCode(); // Generate confirmation code
+                boolean confirmationSent = sendConfirmationCode(phoneNumber, confirmationCode);
+                if (confirmationSent) {
+                    // Prompt user to enter the received confirmation code
+                    TextInputDialog confirmationCodeDialog = new TextInputDialog();
+                    confirmationCodeDialog.setTitle("Confirmation Code");
+                    confirmationCodeDialog.setHeaderText(null);
+                    confirmationCodeDialog.setContentText("Please enter the confirmation code sent to your phone:");
+
+                    Optional<String> confirmationCodeResult = confirmationCodeDialog.showAndWait();
+                    if (confirmationCodeResult.isPresent()) {
+                        String enteredCode = confirmationCodeResult.get();
+                        if (enteredCode.equals(confirmationCode)) {
+                            // Confirmation code matches, proceed with confirmation
+                            // Your confirmation logic here
+                            // Display thank you message
+                            Alert thankYouAlert = new Alert(Alert.AlertType.INFORMATION);
+                            thankYouAlert.setTitle("Thank You");
+                            thankYouAlert.setHeaderText(null);
+                            thankYouAlert.setContentText("Thank you, dear customer.");
+                            thankYouAlert.showAndWait();
                         } else {
-                            // User canceled entering the confirmation code
-                            // Handle as needed
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Invalid Confirmation Code");
+                            alert.setHeaderText(null);
+                            alert.setContentText("The entered confirmation code is incorrect.");
+                            alert.showAndWait();
                         }
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Confirmation Code Sending Failed");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Failed to send the confirmation code. Please try again later.");
-                        alert.showAndWait();
+                        // User canceled entering the confirmation code
+                        // Handle as needed
                     }
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Invalid Phone Number");
+                    alert.setTitle("Confirmation Code Sending Failed");
                     alert.setHeaderText(null);
-                    alert.setContentText("Please enter a valid phone number.");
+                    alert.setContentText("Failed to send the confirmation code. Please try again later.");
                     alert.showAndWait();
                 }
             } else {
-                // User canceled entering the phone number
-                // Handle as needed
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Phone Number");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a valid phone number.");
+                alert.showAndWait();
             }
+        } else {
+            // User canceled entering the phone number
+            // Handle as needed
         }
+    }
 
-        private boolean isValidPhoneNumber(String phoneNumber) {
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
             // Implement phone number validation logic here
             // You can use regular expressions or other validation methods
             return phoneNumber.matches("\\d{8}"); // Example: 10-digit phone number

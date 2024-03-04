@@ -246,17 +246,17 @@
             <DropShadow radius="7.5" width="11.0" />
          </effect>
       </Rectangle>
-      <Text fill="#3b4754" layoutX="651.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available" wrappingWidth="66.58126831054688">
+      <Text fill="#3b4754" layoutX="651.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected" wrappingWidth="66.58126831054688">
          <font>
             <Font name="Microsoft YaHei Light" size="14.0" />
          </font>
       </Text>
-      <Text fill="#3b4754" layoutX="651.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected" wrappingWidth="59.247894287109375">
+      <Text fill="#3b4754" layoutX="650.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Available" wrappingWidth="59.247894287109375">
          <font>
             <Font name="Microsoft YaHei Light" size="14.0" />
          </font>
       </Text>
-      <Text fill="#3b4754" layoutX="646.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unavailable" wrappingWidth="76.58120727539062">
+      <Text fill="#3b4754" layoutX="641.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unavailable" wrappingWidth="76.58120727539062">
          <font>
             <Font name="Microsoft YaHei Light" size="14.0" />
          </font>
