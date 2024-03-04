@@ -10,20 +10,22 @@ public class Enterprise {
     private String password;
     private int phoneNumber;
     private List<Event> events;
-    private List<sponsoringRequest> sponsoringRequests;
+    private List<Sponsoring> sponsoringRequestsAccepted;
+    private List<Sponsoring> sponsoringRequests;
+    private List<User> users;
 
     public Enterprise() {
 
     }
 
-    public Enterprise(int id, String fullName, String description, String email, String password, List<Event> events, List<sponsoringRequest> sponsoringRequests) {
+    public Enterprise(int id, String fullName, String description, String email, String password, List<Event> events, List<Sponsoring> sponsoringRequests) {
         this.id = id;
         this.fullName = fullName;
         this.description = description;
         this.email = email;
         this.password = password;
         this.events = events;
-        this.sponsoringRequests = sponsoringRequests;
+        this.sponsoringRequests= sponsoringRequests;
     }
 
     public Enterprise( String fullName, String description, String email, String password) {
@@ -53,6 +55,14 @@ public class Enterprise {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public String getFullName() {
@@ -103,11 +113,19 @@ public class Enterprise {
         this.events = events;
     }
 
-    public List<sponsoringRequest> getSponsoringRequests() {
+    public List<Sponsoring> getSponsoringRequestsAccepted() {
+        return sponsoringRequestsAccepted;
+    }
+
+    public void setSponsoringRequestsAccepted(List<Sponsoring> sponsoringRequestsAccepted) {
+        this.sponsoringRequestsAccepted = sponsoringRequestsAccepted;
+    }
+
+    public List<Sponsoring> getSponsoringRequests() {
         return sponsoringRequests;
     }
 
-    public void setSponsoringRequests(List<sponsoringRequest> sponsoringRequests) {
+    public void setSponsoringRequests(List<Sponsoring> sponsoringRequests) {
         this.sponsoringRequests = sponsoringRequests;
     }
 

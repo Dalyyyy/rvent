@@ -11,6 +11,15 @@ public class Event {
     private String enterpriseName;
 
     private int maxParticipantNbr;
+    private List<Reclamation> reclamations;
+    private List<Reservation> reservations;
+    private Planning planning;
+    private MediaProfile mediaProfile;
+    private List<Room> rooms;
+    private CheckListRSE checkListRSE;
+    private Enterprise enterprise;
+    private List<Sponsoring> sponsoringRequests;
+
 
 
     public Event(int id, boolean full, String eventName, String description, boolean status, String enterpriseName, int maxParticipantNbr) {
@@ -33,6 +42,10 @@ public class Event {
     public void setId(int id) {
         this.id = id;
     }
+    public void addSponsoringRequest(Sponsoring request) {
+        sponsoringRequests.add(request);
+    }
+
 
     public boolean isFull() {
         return full;
