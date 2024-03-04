@@ -8,7 +8,7 @@ import org.entities.User;
 import org.services.EventService;
 import org.services.UserService;
 
-import java.sql.SQLException:
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -114,15 +114,14 @@ public class Main {
             e.printStackTrace();
             System.err.println("Erreur lors de l'exécution des méthodes: " + e.getMessage());
         }*/
-
-
-    }
-
-
-
-
-
-}
-=======
-}
+//
+//
+//    }
+//
+//
+//
+//
+//
+//
+//}
 

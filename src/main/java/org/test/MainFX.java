@@ -9,17 +9,10 @@ import javafx.stage.Stage;
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficheSpons.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddUser.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setTitle("SponsoringRequest");
-        gestionEvent
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/eventcrud.fxml"));
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateUser.fxml"));
-      
-        Parent root = loader.load();
-        Scene scene = new Scene(root,1200,750);
         primaryStage.setTitle("create new user ");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
