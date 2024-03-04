@@ -5,6 +5,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 import javafx.stage.FileChooser;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.controllers.DatabaseHelper1;
@@ -108,9 +122,13 @@ public class AfficherRes {
     @FXML
     private Button idRetour;
     @FXML
+    private Button generateQRCodeImage;
+    @FXML
     private Button idSupp;
+
     private Reservation selectedRes;
     private ServiceReservation reservationService;
+
 
     @FXML
     void trierplusrecent(ActionEvent event) {

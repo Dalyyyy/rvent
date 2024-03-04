@@ -61,6 +61,7 @@
             <Button fx:id="trierplusancien" layoutX="373.0" layoutY="480.0" mnemonicParsing="false" onAction="#trierplusancien" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: darkgreen;" text="Trier " />
             <Text layoutX="396.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="plus ancien " />
             <Text layoutX="539.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="plus récent " />
+            <Button fx:id="generateQRCode" layoutX="224.0" layoutY="498.0" mnemonicParsing="false" onAction="#generateQRCode" prefHeight="26.0" prefWidth="107.0" style="-fx-background-color: darkgreen;" text="generateQRCode" />
             </children>
         </AnchorPane>
     </children>
