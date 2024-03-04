@@ -83,7 +83,7 @@
                       <Font name="Microsoft YaHei Bold" size="15.0" />
                   </font>
               </Button>
-            <Button fx:id="back" layoutX="8.0" layoutY="278.0" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="215.0" style="-fx-background-color: #29323D;" text="Back " textFill="WHITE">
+            <Button fx:id="back" layoutX="8.0" layoutY="278.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="215.0" style="-fx-background-color: #29323D;" text="Back " textFill="WHITE">
                <font>
                   <Font name="Microsoft YaHei Bold" size="15.0" />
                </font>

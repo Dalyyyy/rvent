@@ -21,7 +21,7 @@
          <font>
             <Font size="16.0" />
          </font></Text>
-        <Button layoutX="249.0" layoutY="445.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #29323D;" text="Ajouter" textFill="WHITE" />
+        <Button layoutX="254.0" layoutY="446.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #29323D;" text="Ajouter" textFill="WHITE" />
         <DatePicker fx:id="tfdate" layoutX="361.0" layoutY="282.0" />
         <Text layoutX="223.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Reservation:">
          <font>
@@ -33,7 +33,7 @@
          </font></Text>
       <AnchorPane layoutX="14.0" layoutY="18.0" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="203.0" style="-fx-background-color: green;">
          <children>
-              <Button layoutY="132.0" mnemonicParsing="false" onAction="#Afficher" prefHeight="40.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Afficher" textFill="WHITE">
+              <Button layoutY="132.0" mnemonicParsing="false" onAction="#Afficher" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Afficher Réservation " textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>

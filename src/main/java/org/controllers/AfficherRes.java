@@ -102,12 +102,39 @@ public class AfficherRes {
     @FXML
     private Button idAjouter;
     @FXML
+    private Button trierplusancien;
+    @FXML
+    private Button trierplusrecent;
+    @FXML
     private Button idRetour;
     @FXML
     private Button idSupp;
     private Reservation selectedRes;
     private ServiceReservation reservationService;
 
+    @FXML
+    void trierplusrecent(ActionEvent event) {
+        try {
+            List<Reservation> reservations = reservationService.selectAll();
+            reservations.sort(Comparator.comparing(Reservation::getDate).reversed()); // Trie par date la plus récente
+            clearGrid();
+            populateGrid(reservations);
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Échec de récupération des réservations : " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void trierplusancien(ActionEvent event) {
+        try {
+            List<Reservation> reservations = reservationService.selectAll();
+            reservations.sort(Comparator.comparing(Reservation::getDate)); // Assuming getDate() returns a LocalDate
+            clearGrid();
+            populateGrid(reservations);
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch reservations: " + e.getMessage());
+        }
+    }
     @FXML
     public void telecharger(ActionEvent event) {
         try {
@@ -200,7 +227,7 @@ public class AfficherRes {
         int rowIndex = 0; // Initialize the row index
 
 // Add column headers
-        gridfak.add(new Label("ID"), 0, rowIndex);
+        gridfak.add(new Label("NUm tel "), 0, rowIndex);
         gridfak.add(new Label("Full Name"), 1, rowIndex);
         gridfak.add(new Label("Event Name"), 2, rowIndex);
         gridfak.add(new Label("Time"), 3, rowIndex);

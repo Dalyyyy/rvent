@@ -23,9 +23,9 @@
                   </Text>
                     </children>
                 </AnchorPane>
-                <Button fx:id="idModifier" layoutX="485.0" layoutY="480.0" mnemonicParsing="false" onAction="#modifier" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: darkgreen;" text="Modifier" />
+                <Button fx:id="idModifier" layoutX="683.0" layoutY="460.0" mnemonicParsing="false" onAction="#modifier" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: darkgreen;" text="Modifier" />
                 <Button layoutX="797.0" layoutY="454.0" mnemonicParsing="false" onAction="#OnRefresh" prefHeight="26.0" prefWidth="88.0" style="-fx-background-color: darkgreen;" text="Refresh" />
-                <Button fx:id="idSupp" layoutX="602.0" layoutY="480.0" mnemonicParsing="false" onAction="#supprimerRes" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: dark green;" text="supprimer" />
+                <Button fx:id="idSupp" layoutX="793.0" layoutY="493.0" mnemonicParsing="false" onAction="#supprimerRes" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: dark green;" text="supprimer" />
             <GridPane fx:id="gridfak" layoutX="224.0" layoutY="64.0" prefHeight="343.0" prefWidth="656.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
@@ -52,11 +52,15 @@
                   <Font size="13.0" />
                </font></Button>
                   <Button fx:id="idRetour" layoutX="14.0" layoutY="184.0" mnemonicParsing="false" onAction="#Retour" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Back " textFill="WHITE" />
-            <Button fx:id="telecharger" layoutX="192.0" layoutY="468.0" mnemonicParsing="false" onAction="#telecharger" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Telecharger " textFill="WHITE">
+            <Button fx:id="telecharger" layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#telecharger" prefHeight="26.0" prefWidth="203.0" style="-fx-background-color: #29323D;" text="Telecharger " textFill="WHITE">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
+            <Button fx:id="trierplusrecent" layoutX="523.0" layoutY="480.0" mnemonicParsing="false" onAction="#trierplusrecent" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: darkgreen;" text="Trier " />
+            <Button fx:id="trierplusancien" layoutX="373.0" layoutY="480.0" mnemonicParsing="false" onAction="#trierplusancien" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: darkgreen;" text="Trier " />
+            <Text layoutX="396.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="plus ancien " />
+            <Text layoutX="539.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="plus récent " />
             </children>
         </AnchorPane>
     </children>
