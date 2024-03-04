@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="AdminInterfaces" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1945.0" prefWidth="1331.0" stylesheets="@css/event.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.eventController">
+    <children>
+        <VBox fx:id="eventAffichagee" prefHeight="907.0" prefWidth="1331.0">
+            <children>
+                <Pane fx:id="UpperSection" prefHeight="415.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/event.css">
+                    <children>
+                  <Button fx:id="search" layoutX="580.0" layoutY="41.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="60.0" />
+                        <Button layoutX="672.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#addEventInterfacee" prefHeight="37.0" prefWidth="38.0" styleClass="UpperSectionBtn" stylesheets="@css/event.css" text="+" textFill="#f7f7f7" />
+                  <Label alignment="CENTER" layoutX="248.0" layoutY="36.0" prefHeight="31.0" prefWidth="105.0" text="Search" textAlignment="CENTER">
+                     <font>
+                        <Font name="Calibri Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="searchField" layoutX="344.0" layoutY="42.0" opacity="0.31" prefHeight="23.0" prefWidth="228.0" promptText="search event" />
+                  <ImageView fx:id="searchImage" fitHeight="31.0" fitWidth="22.0" layoutX="599.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@loupe.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="810.0" layoutY="18.0" text="user" />
+                  <ImageView fitHeight="22.0" fitWidth="38.0" layoutX="850.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@homme.png" />
+                     </image>
+                  </ImageView>
+                  <VBox layoutX="-3.0" prefHeight="414.0" prefWidth="228.0" style="-fx-background-color: #3CE364;">
+                     <children>
+                        <ImageView fitHeight="224.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@420548751_1848905325570705_1587843912821999918_n.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="104.0" fitWidth="138.0" layoutX="307.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@event%201.jpg" />
+                     </image></ImageView>
+                  <ImageView fitHeight="95.0" fitWidth="166.0" layoutX="489.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@event2.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="95.0" fitWidth="166.0" layoutX="680.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@event3.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="397.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO RVENT" textAlignment="CENTER" wrappingWidth="348.20623779296875" />
+                    </children>
+                </Pane>
+                <Pane fx:id="ListContainer" prefHeight="501.0" prefWidth="1331.0" style="-fx-background-color: #1e1e1e;">
+                    <children>
+                        <Label layoutX="542.0" layoutY="29.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="326.0" stylesheets="@css/event.css" text="event List ">
+                            <styleClass>
+                                <String fx:value="label-style" />
+                                <String fx:value="title" />
+                            </styleClass>
+                        </Label>
+                        <TableView fx:id="accountTableView" layoutX="69.0" layoutY="102.0" prefHeight="544.0" prefWidth="1195.0" stylesheets="@css/event.css">
+                            <columns>
+                                <TableColumn fx:id="eventnamecolomn" prefWidth="132.79995727539062" text="event name" />
+                                <TableColumn fx:id="descriptioncolomn" prefWidth="155.20005798339844" text="description" />
+                                <TableColumn fx:id="entreprisenamecolomn" prefWidth="158.39996337890625" text="enterpriseName" />
+                                <TableColumn fx:id="maxnbrcolomn" prefWidth="174.39996337890625" text="maxParticipantNbr" />
+                        <TableColumn fx:id="status" prefWidth="162.4000244140625" text="status" />
+                        <TableColumn fx:id="Full" prefWidth="152.800048828125" text="Full" />
+                                <TableColumn fx:id="actionsColumn" prefWidth="253.60003662109375" text="Actions" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </Pane>
+            </children>
+        </VBox>
+        <Pane fx:id="AddeventPagee" prefHeight="907.0" prefWidth="1331.0">
+            <children>
+                <VBox fx:id="AddAdminCard" layoutX="327.0" layoutY="139.0" maxWidth="1361.0" prefHeight="588.0" prefWidth="530.0" styleClass="add-product-card">
+                    <children>
+                        <Label fx:id="title" prefHeight="56.0" prefWidth="307.0" styleClass="title" text="Add a new event">
+                            <font>
+                                <Font name="Arial Rounded MT Bold" size="31.0" />
+                            </font>
+                        </Label>
+                        <HBox prefHeight="71.0" prefWidth="344.0" spacing="10" styleClass="input-field">
+                            <children>
+                                <Label prefHeight="22.0" prefWidth="183.0" text="event name" />
+                                <TextField fx:id="eventNameField" prefHeight="37.0" prefWidth="196.0" />
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="71.0" prefWidth="344.0" spacing="10" styleClass="input-field">
+                            <children>
+                                <Label prefHeight="22.0" prefWidth="181.0" text="description" />
+                                <TextField fx:id="DescField" prefHeight="71.0" />
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="71.0" prefWidth="344.0" spacing="10" styleClass="input-field">
+                            <children>
+                                <Label prefHeight="22.0" prefWidth="178.0" text="enterpriseName" />
+                                <TextField fx:id="entrepriseNameField" />
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="70.0" prefWidth="344.0" spacing="10" styleClass="input-field">
+                            <children>
+                                <Label prefHeight="22.0" prefWidth="177.0" text="maxParticipantNbr" />
+                                <TextField fx:id="maxnbrField" />
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="72.0" prefWidth="344.0" spacing="10" styleClass="input-field">
+                            <children>
+                                <Label prefHeight="22.0" prefWidth="179.0" text="ValiderEvent" />
+                        <CheckBox fx:id="statusCheckbox" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" text="check if yes">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </CheckBox>
+                            </children>
+                        </HBox>
+                  <HBox prefHeight="72.0" prefWidth="344.0" spacing="10" styleClass="input-field">
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="179.0" text="is Full : " />
+                        <CheckBox fx:id="isfull_checkbox" mnemonicParsing="false" prefHeight="49.0" prefWidth="116.0" text="check if no" />
+                     </children>
+                  </HBox>
+                        <HBox id="submitField" prefHeight="60.0" prefWidth="1290.0">
+                            <children>
+                                <Button fx:id="add_event" mnemonicParsing="false" onAction="#handleAddAdmin" prefHeight="46.0" prefWidth="166.0" styleClass="orangebtn" text="Add">
+                                    <HBox.margin>
+                                        <Insets left="50.0" />
+                                    </HBox.margin>
+                                </Button>
+                        <Button fx:id="edit_event" mnemonicParsing="false" onAction="#handleEditevent" prefHeight="46.0" prefWidth="166.0" styleClass="orangebtn" text="edit" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <Button layoutX="30.0" layoutY="26.0" mnemonicParsing="false" onAction="#GoToDisplayInterfacee" prefHeight="56.0" prefWidth="40.0" styleClass="UpperSectionBtn" stylesheets="@css/event.css" text="&lt;" />
+            </children>
+        </Pane>
+    </children>
+</VBox>

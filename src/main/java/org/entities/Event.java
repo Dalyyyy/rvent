@@ -9,7 +9,9 @@ public class Event {
     private String description;
     private boolean status;
     private String enterpriseName;
+
     private int maxParticipantNbr;
+
 
     public Event(int id, boolean full, String eventName, String description, boolean status, String enterpriseName, int maxParticipantNbr) {
         this.id = id;

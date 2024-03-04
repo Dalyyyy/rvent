@@ -21,13 +21,13 @@
     -fx-font-size: 25;
     -fx-font-weight: bold;
     -fx-margin-bottom: 10;
-    -fx-text-fill: #4caf50; /* Dark green text */
+    -fx-text-fill: #23e02d; /* Dark green text */
 }
 
 .input-field Label {
     -fx-font-size: 19;
     -fx-font-weight: bold;
-    -fx-text-fill: #4caf50;
+    -fx-text-fill: #23e02d;
 }
 
 .input-field TextField,
@@ -56,8 +56,8 @@ Button,
     -fx-text-fill: #ffffff;
     -fx-border-radius: 10;
     -fx-background-radius: 20;
-    -fx-background-color: #4caf50; /* Dark green background */
-    -fx-border-color: #388e3c; /* Darker green border color */
+    -fx-background-color: #23e02d; /* Dark green background */
+    -fx-border-color: #23e02d; /* Darker green border color */
 }
 
 Button:hover,
@@ -84,7 +84,7 @@ Button:hover,
 }
 
 .search-field {
-    -fx-background-color: #4caf50;
+    -fx-background-color: #23e02d;
     -fx-border-color: none;
     -fx-border-radius: 16;
     -fx-background-radius: 16;
