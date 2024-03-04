@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class RventDB {
-    private final String URL = "jdbc:mysql://localhost:3306/javaprojectdb";
+    private final String URL = "jdbc:mysql://localhost:3306/test";
     private final String USER ="root";
     private final String PW = "";
     public Connection getConnection;

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="SuperAdminPages" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.SuperAdminController">
+  <children>
+    <AnchorPane prefHeight="703.0" prefWidth="800.0">
+      <children>
+        <TableView fx:id="userTableView" layoutX="22.0" layoutY="89.0" prefHeight="362.0" prefWidth="658.0">
+          <columns>
+            <TableColumn fx:id="nameColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="70.0" text="Name" />
+            <TableColumn fx:id="familyNameColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="102.0" text="Family Name" />
+            <TableColumn fx:id="phoneColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="113.0" text="phone Number" />
+            <TableColumn fx:id="emailColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="84.0" text="Email" />
+            <TableColumn fx:id="passwordColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="91.0" text="Password" />
+            <TableColumn fx:id="roleColumn" prefWidth="46.0" text="Role" />
+            <TableColumn fx:id="roleColumn1" prefWidth="151.0" text="reservation Number" />
+          </columns>
+        </TableView>
+            <Button fx:id="relaodButton" layoutX="109.0" layoutY="487.0" mnemonicParsing="false" onAction="#refreshTableView" text="reload" />
+            <Button fx:id="onClickAddUser" layoutX="213.0" layoutY="487.0" mnemonicParsing="false" onAction="#addUser" text="add user" />
+            <Button fx:id="onClickDelete" layoutX="362.0" layoutY="487.0" mnemonicParsing="false" onAction="#onClickDelete" text="Delete User" />
+            <Button fx:id="editUser" layoutX="497.0" layoutY="487.0" mnemonicParsing="false" text="update User" />
+            <Button fx:id="EportToPDF" layoutX="350.0" layoutY="539.0" mnemonicParsing="false" onAction="#exportToPDF" text="Export to PDF" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

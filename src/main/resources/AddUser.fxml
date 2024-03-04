@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="354.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.AddUserController">
+    <children>
+        <TextField fx:id="name" layoutX="38.0" layoutY="91.0" prefHeight="38.0" prefWidth="150.0" promptText="Name" style="-fx-background-color: #ffff;" />
+        <TextField fx:id="familyName" layoutX="278.0" layoutY="168.0" prefHeight="38.0" prefWidth="150.0" promptText="familyName" style="-fx-background-color: #ffff;" />
+        <TextField fx:id="email" layoutX="38.0" layoutY="170.0" prefHeight="38.0" prefWidth="150.0" promptText="email" style="-fx-background-color: #ffff;" />
+        <PasswordField fx:id="password" layoutX="271.0" layoutY="91.0" prefHeight="38.0" prefWidth="150.0" promptText="password" style="-fx-background-color: #ffff;" />
+        <DatePicker fx:id="birthDate" layoutX="278.0" layoutY="238.0" prefHeight="38.0" prefWidth="175.0" promptText="dd/mm/yyyy" style="-fx-background-color: #ffff;" />
+        <Button layoutX="467.0" layoutY="301.0" mnemonicParsing="false" onAction="#addUser" prefHeight="30.0" prefWidth="77.0" style="-fx-background-color: #3CE364;" text="Add User" textFill="WHITE" />
+      <Text layoutX="29.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your account ">
+         <font>
+            <Font name="Lato Bold" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="backButton" layoutX="545.0" layoutY="12.0" mnemonicParsing="false" onAction="#onClickBackButton" style="-fx-background-color: #F3F5F9;" text="back" textFill="#3ce364" />
+      <Text layoutX="40.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+      <Text layoutX="278.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <Text layoutX="278.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Family Name" />
+      <Text layoutX="282.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date" />
+      <Text fill="RED" layoutX="73.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="332.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="349.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="336.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text layoutX="37.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+      <Text fill="RED" layoutX="68.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <ComboBox fx:id="roleComboBox" layoutX="38.0" layoutY="244.0" prefWidth="150.0" style="-fx-background-color: #ffff;" />
+      <Text layoutX="36.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="chose role" />
+      <Text fill="RED" layoutX="96.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text layoutX="41.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
+      <Text fill="RED" layoutX="149.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <TextField fx:id="phone" layoutX="36.0" layoutY="301.0" />
+    </children>
+</AnchorPane>
