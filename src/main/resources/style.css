@@ -1,2 +1,24 @@
+#SponTableView {
+    -fx-background-color: #ffffff; /* Couleur de fond de la table */
+}
+
+#SponTableView .column-header-background {
+    -fx-background-color: #ff0000; /* Couleur de fond des en-têtes de colonne */
+}
+
+#SponTableView .column-header, #SponTableView .table-cell {
+    -fx-text-fill: #3F4254; /* Couleur du texte dans les en-têtes de colonne et les cellules */
+    -fx-font-size: 14px; /* Taille de police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-padding: 5px; /* Espacement intérieur */
+}
+
+#SponTableView .table-row-cell {
+    -fx-background-color: #F4F6F7; /* Couleur de fond des lignes */
+}
+
+#SponTableView .table-row-cell:selected {
+    -fx-background-color: #E1E9FF; /* Couleur de fond des lignes sélectionnées */
+}
 
 

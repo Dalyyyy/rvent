@@ -14,7 +14,7 @@ public class SponService implements ISponsoring <Sponsoring>{
     }
     @Override
     public void ajouter(Sponsoring sponsoring) throws SQLException {
-        String query = "INSERT INTO sponsoring (nom, prenom, domaine, adresse, email ,tetab, numero ,description,nom_etab) VALUES (?, ?, ?, ?, ? ,? ,? ,? ,?)";
+        String query = "INSERT INTO sponsoring (nom, prenom, domaine, adresse, email ,tetab, numero ,description,nom_etab,etat) VALUES (?, ?, ?, ?, ? ,? ,? ,? ,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, sponsoring.getNom());
             preparedStatement.setString(2,sponsoring.getPrenom());
@@ -25,6 +25,7 @@ public class SponService implements ISponsoring <Sponsoring>{
             preparedStatement.setInt(7, sponsoring.getNumero());
             preparedStatement.setString(8, sponsoring.getDescription());
             preparedStatement.setString(9, sponsoring.getNom_etab());
+            preparedStatement.setBoolean(8,sponsoring.setEtat(false));
 
 
 
@@ -91,5 +92,27 @@ public class SponService implements ISponsoring <Sponsoring>{
             }
         }
         return sponsoringList;    }
+    @Override
+    public void accepter(Sponsoring sponsoring) throws SQLException {
+        String query = "UPDATE sponsoring SET etat='1' WHERE id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, sponsoring.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erreur lors de l'acceptation du sponsoring: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void refuser(int id) throws SQLException {
+        String query = "UPDATE sponsoring SET etat='0' WHERE id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erreur lors du refus du sponsoring: " + e.getMessage());
+        }
+    }
 
 }

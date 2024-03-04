@@ -34,8 +34,30 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.2.7.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>8.9.0</version>
+        </dependency>
+        <!-- Thanks for using https://jar-download.com -->
+
+
+
+
 
     </dependencies>
+
+
 
 
     <build>

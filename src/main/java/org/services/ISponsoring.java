@@ -8,6 +8,9 @@ public interface ISponsoring <Sponsoring>{
     void ajouter(Sponsoring sponsoring) throws SQLException;
     void modifier(Sponsoring sponsoring) throws SQLException;
     void supprimer(int id) throws SQLException;
+    void accepter(Sponsoring sponsoring) throws SQLException;
+
+    public void refuser(int id) throws SQLException;
     ObservableList<org.entities.Sponsoring> afficher() throws SQLException;
 
 

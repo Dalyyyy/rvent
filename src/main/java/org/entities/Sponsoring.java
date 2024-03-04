@@ -12,6 +12,7 @@ public class Sponsoring {
     private Tetab tetab;
     private int numero;
     private String description;
+    private boolean etat;
     //private int etat;
     public enum Tetab {
         entreprise,startup,organisme,institution_financiére;
@@ -145,6 +146,15 @@ public class Sponsoring {
 
     public void setNom_etab(String nom_etab) {
         this.nom_etab = nom_etab;
+    }
+
+    public boolean isEtat() {
+        return etat;
+    }
+
+    public boolean setEtat(boolean etat) {
+        this.etat = etat;
+        return etat;
     }
 
     @Override

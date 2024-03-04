@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SponListe.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficheSpons.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        primaryStage.setTitle("create new user ");
+        primaryStage.setTitle("SponsoringRequest");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
 

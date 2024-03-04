@@ -1,6 +1,14 @@
 package org.controllers;
 
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.entities.Example;
 import org.entities.Sponsoring;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +27,10 @@ import org.services.SponService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -30,6 +42,8 @@ public class DevenirSponsorForm implements Initializable {
     @FXML
     TableView<Sponsoring> SponTableView;
 
+    @FXML
+    private AnchorPane formPane;
     @FXML
     TableColumn<?, ?> nomColumn;
 
@@ -136,6 +150,9 @@ public class DevenirSponsorForm implements Initializable {
     @FXML
     private TextField prenomfield;
 
+    @FXML
+    private TableColumn<?, ?> etatColumn;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         myChoiceBox.getItems().addAll(Sélectionner);
@@ -146,6 +163,7 @@ public class DevenirSponsorForm implements Initializable {
         display.setManaged(false);
         addsponsor.setVisible(true);
         addsponsor.setManaged(true);
+
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         prenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         etabColumn.setCellValueFactory(new PropertyValueFactory<>("nom_etab"));
@@ -195,12 +213,13 @@ public class DevenirSponsorForm implements Initializable {
                     {
                         // Set actions for the buttons
                         deleteButton.setOnAction(event -> {
-                                Sponsoring sponsoring = getTableView().getItems().get(getIndex());
+                            Sponsoring sponsoring = getTableView().getItems().get(getIndex());
                             System.out.println("Delete: " + sponsoring.getId());
                             //SponService SponService = new SponService();
                             try {
-                               SponService.supprimer(sponsoring.getId());
+                                SponService.supprimer(sponsoring.getId());
                                 // reload_page();
+                                reload();
 
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
@@ -215,6 +234,7 @@ public class DevenirSponsorForm implements Initializable {
                             Sponsoring sponsoring = getTableView().getItems().get(getIndex());
                             System.out.println("Edit: " + sponsoring.getId());
                             gotoedit();
+                            reload();
                             instance.SelectedSub=sponsoring.getId();
                             fillSubinputs(sponsoring);
 
@@ -274,7 +294,7 @@ public class DevenirSponsorForm implements Initializable {
         display.setManaged(true);
         addsponsor.setVisible(false);
         addsponsor.setManaged(false);
-        reload_page();
+
 
 
     }
@@ -322,6 +342,8 @@ public class DevenirSponsorForm implements Initializable {
         try {
             // Ajouter le sponsoring à la base de données
             sponService.ajouter(sponsoring);
+//            Example example = new Example();
+//            example.Whatsapp();
             System.out.println(nom);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -329,7 +351,7 @@ public class DevenirSponsorForm implements Initializable {
 
         // Aller à l'affichage des sponsorings
         GOTODISPLAY();
-        reload_page();
+        reload();
     }
 
     // Méthode pour vérifier si une adresse e-mail est valide en utilisant une expression régulière
@@ -348,48 +370,152 @@ public class DevenirSponsorForm implements Initializable {
     }
 
 
-    private void reload_page() {
-        SponService sponService =new SponService();
-        ObservableList<Sponsoring> sponsorings;
-        {
-            try {
-                sponsorings = sponService.afficher();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        display.setVisible(true);
-        display.setManaged(true);
-
-    }
 
 
     @FXML
     public void handleEdit(){
         String nom = nomfield.getText();
-        String prenom =  prenomfield.getText();
-        String nom_etab =  etablifield.getText();
-        String adresse =  addressField.getText();
-        int numero =  Integer.parseInt(numeroField.getText());
+        String prenom = prenomfield.getText();
+        String nom_etab = etablifield.getText();
+        String adresse = addressField.getText();
+        int numero = 0;
+        try {
+            numero = Integer.parseInt(numeroField.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Veuillez entrer un numéro valide.");
+            return; // Arrêter le traitement si le numéro n'est pas valide
+        }
         String email = emailField.getText();
-        String description =  descField.getText();
+        String description = descField.getText();
         String domaine = "azerty";
 
-        Sponsoring sponsoring = new Sponsoring(instance.SelectedSub, nom,nom_etab, prenom,domaine,adresse,email, Sponsoring.Tetab.entreprise,numero,description);
-        SponService sponService =new SponService();
+        // Vérifier si les champs sont vides
+        if (nom.isEmpty() || prenom.isEmpty() || nom_etab.isEmpty() || adresse.isEmpty() || email.isEmpty() || description.isEmpty()) {
+            showAlert("Erreur", "Veuillez remplir tous les champs.");
+            return; // Arrêter le traitement si un champ est vide
+        }
+
+        // Vérifier si l'email est valide en utilisant une expression régulière
+        if (!isValidEmail(email)) {
+            showAlert("Erreur", "Veuillez entrer une adresse e-mail valide.");
+            return; // Arrêter le traitement si l'email n'est pas valide
+        }
+
+        // Vérifier si le numéro est un entier positif
+        if (numero <= 0) {
+            showAlert("Erreur", "Veuillez entrer un numéro valide.");
+            return; // Arrêter le traitement si le numéro n'est pas valide
+        }
+
+        // Créer un nouvel objet Sponsoring
+        Sponsoring sponsoring = new Sponsoring(instance.SelectedSub, nom, nom_etab, prenom, domaine, adresse, email, Sponsoring.Tetab.entreprise, numero, description);
+        SponService sponService = new SponService();
 
         try {
+            // Modifier le sponsoring dans la base de données
             sponService.modifier(sponsoring);
             System.out.println(prenom);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(nom);
         }
+
+        // Aller à l'affichage des sponsorings
         GOTODISPLAY();
+        reload();
 
 
         //  initAdminInputs();
-        // reload_page();
+
+    }
+    @FXML
+    void exportToExcel() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Exporter en Excel");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichier Excel", "*.xlsx"));
+        File file = fileChooser.showSaveDialog(SponTableView.getScene().getWindow());
+
+        if (file != null) {
+            Workbook workbook = null;
+
+            try {
+                // Vérifie si le fichier existe
+                if (file.exists()) {
+                    FileInputStream fis = new FileInputStream(file);
+                    workbook = new XSSFWorkbook(fis);
+                } else {
+                    workbook = new XSSFWorkbook();
+                }
+
+                Sheet sheet = workbook.createSheet("Données"); // Crée une nouvelle feuille de calcul
+
+                // Ajouter les en-têtes de colonne
+                Row headerRow = sheet.createRow(0);
+                headerRow.createCell(0).setCellValue("Nom");
+                headerRow.createCell(1).setCellValue("Prénom");
+                headerRow.createCell(2).setCellValue("Nom Établissement");
+                headerRow.createCell(3).setCellValue("Type Établissement");
+                headerRow.createCell(4).setCellValue("Domaine d'application");
+                headerRow.createCell(5).setCellValue("Adresse");
+                headerRow.createCell(6).setCellValue("Email");
+                headerRow.createCell(7).setCellValue("Numero de telephone");
+                headerRow.createCell(8).setCellValue("Description");
+                // Ajouter d'autres en-têtes de colonne comme ça
+
+                // Ajouter les données à partir de TableView dans le fichier Excel
+                ObservableList<Sponsoring> items = SponTableView.getItems();
+                for (int i = 0; i < items.size(); i++) {
+                    Sponsoring sponsoring = items.get(i);
+                    Row row = sheet.createRow(i + 1); // Commence à partir de la deuxième ligne (après l'en-tête)
+                    row.createCell(0).setCellValue(sponsoring.getNom());
+                    row.createCell(1).setCellValue(sponsoring.getPrenom());
+                    row.createCell(2).setCellValue(sponsoring.getNom_etab());
+                    row.createCell(3).setCellValue(String.valueOf(sponsoring.getTetab()));
+                    row.createCell(4).setCellValue(sponsoring.getDomaine());
+                    row.createCell(5).setCellValue(sponsoring.getAdresse());
+                    row.createCell(6).setCellValue(sponsoring.getEmail());
+                    row.createCell(7).setCellValue(sponsoring.getNumero());
+                    row.createCell(8).setCellValue(sponsoring.getDescription());
+
+
+                    // Ajouter d'autres cellules pour les autres colonnes comme ça
+                }
+
+                // Écrire dans le fichier
+                try (FileOutputStream fileOut = new FileOutputStream(file)) {
+                    workbook.write(fileOut);
+                    showAlert(AlertType.INFORMATION, "Succès", "Les données ont été exportées avec succès.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(AlertType.ERROR, "Erreur", "Une erreur est survenue lors de l'exportation des données.");
+            } finally {
+                try {
+                    if (workbook != null) {
+                        workbook.close(); // Ferme le classeur Excel
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    public void reload() {
+        try {
+            sponsorings.clear(); // Efface les données existantes
+            sponsorings.addAll(sponService.afficher()); // Ajoute les nouvelles données
+            SponTableView.setItems(sponsorings); // Met à jour le TableView
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Erreur", "Une erreur est survenue lors du rechargement des données.");
+        }
     }
 
     @FXML
@@ -408,6 +534,7 @@ public class DevenirSponsorForm implements Initializable {
 
     }
 
+
     @FXML
     public void gotoadd() {
 
@@ -420,7 +547,7 @@ public class DevenirSponsorForm implements Initializable {
 
     }
 
+    public AnchorPane getFormPane() {
+        return formPane;
+    }
 }
-
-
-
