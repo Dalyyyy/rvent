@@ -21,13 +21,14 @@ public class EnterpriseService implements IEnterpriseService{
             throw new IllegalArgumentException("Email is already registered.");
         }
 
-        String sql = "INSERT INTO enterprise (fullName, description, email, password) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO enterprise (fullName, description, email, password, phoneNumber) " +
+                "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, enterprise.getFullName());
             preparedStatement.setString(2, enterprise.getDescription());
             preparedStatement.setString(3, enterprise.getEmail());
-            preparedStatement.setString(4, userService.hashPassword(enterprise.getPassword()));
+            preparedStatement.setInt(4, enterprise.getPhoneNumber());
+            preparedStatement.setString(5, userService.hashPassword(enterprise.getPassword()));
             preparedStatement.executeUpdate();
         }
     }

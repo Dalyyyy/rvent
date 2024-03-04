@@ -17,6 +17,6 @@ public interface IUserService <U>{
     void deleteUser(int id) throws SQLException;
 
     List<User> getAllUsers() throws SQLException;
-    public boolean authenticateUser(String email, String password) throws SQLException;
+    public String[] authenticateUser(String email, String password) throws SQLException;
     public  void register(User user, String confirmedPassword) throws SQLException;
 }

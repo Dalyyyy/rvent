@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.entities.Role;
 import org.entities.User;
+import org.services.ShowAlertService;
 import org.services.UserService;
 
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 public class AddUserController {
     private final UserService userService = new UserService();
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^(.+)@(.+)\\.(.+)$");
+    private final ShowAlertService showAlertService = new ShowAlertService();
 
     @FXML
     private TextField name;
@@ -34,6 +36,8 @@ public class AddUserController {
     @FXML
     private DatePicker birthDate;
     @FXML
+    private TextField phone;
+    @FXML
     private Button backButton;
     @FXML
     private ComboBox<Role> roleComboBox;
@@ -45,6 +49,7 @@ public class AddUserController {
     }
     @FXML
     void addUser(ActionEvent event) {
+
         try {
             Role selectedRole = roleComboBox.getValue();
 
@@ -57,6 +62,8 @@ public class AddUserController {
             String userEmail = email.getText();
             String userPassword = password.getText();
             LocalDate selectedDate = birthDate.getValue();
+            LocalDate currentDate = LocalDate.now();
+            int phoneNumber = Integer.parseInt(phone.getText());
 
             if (!fullName.matches("[a-zA-Z]+") || !userFamilyName.matches("[a-zA-Z]+")) {
                 throw new IllegalArgumentException("Full name and family name must contain only letters.");
@@ -69,20 +76,18 @@ public class AddUserController {
             if (!userPassword.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$")) {
                 throw new IllegalArgumentException("Password must contain at least one letter, one digit, and be at least 8 characters long.");
             }
+            if (selectedDate != null && selectedDate.isAfter(currentDate)) {
+                throw new IllegalArgumentException("Selected date cannot be in the future.");
+            }
 
-            userService.addUser(new User(fullName, userFamilyName, userEmail, userPassword, selectedDate), selectedRole);
-        } catch (IllegalArgumentException e) {
-            // Show error message for validation failures
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            userService.addUser(new User(fullName, userFamilyName, userEmail, userPassword, selectedDate, phoneNumber), selectedRole);
+            showAlertService.showAlert("Success", "Enterprise registered successfully.");
+        }catch (IllegalArgumentException e) {
+            // Show error for validation failures
+            showAlertService.showAlert("Error", e.getMessage());
         } catch (SQLException e) {
-            // Show error message for SQL exceptions
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            // Show error for database-related issues
+            showAlertService.showAlert("Error", "An error occurred while registering the Enterprise: " + e.getMessage());
         }
     }
 

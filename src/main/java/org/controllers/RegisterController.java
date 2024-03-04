@@ -34,9 +34,12 @@ public class RegisterController {
     @FXML
     private DatePicker birthDate;
     @FXML
+    private TextField phone;
+    @FXML
     private Button singInButton;
     @FXML
     private Button backButton;
+
     @FXML
     void register(ActionEvent event) {
         String fullName = name.getText();
@@ -44,8 +47,9 @@ public class RegisterController {
         String userEmail = email.getText();
         String userPassword = password.getText();
         String confirmedPassword = rPassword.getText();
-
         LocalDate selectedDate = birthDate.getValue();
+        LocalDate currentDate = LocalDate.now();
+        int phoneNumber = Integer.parseInt(phone.getText());
 
 
 
@@ -58,6 +62,7 @@ public class RegisterController {
                 throw new IllegalArgumentException("Full name and family name must contain only letters.");
             }
 
+
             if (!EMAIL_PATTERN.matcher(userEmail).matches()) {
                 throw new IllegalArgumentException("Invalid email format.");
             }
@@ -65,8 +70,11 @@ public class RegisterController {
             if (!userPassword.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$")) {
                 throw new IllegalArgumentException("Password must contain at least one letter, one digit, and be at least 8 characters long.");
             }
+            if (selectedDate != null && selectedDate.isAfter(currentDate)) {
+                throw new IllegalArgumentException("Selected date cannot be in the future.");
+            }
 
-            userService.register(new User(fullName, userFamilyName, userEmail, userPassword, birthDate.getValue()), confirmedPassword);
+            userService.register(new User(fullName, userFamilyName, userEmail, userPassword, birthDate.getValue(),phoneNumber), confirmedPassword);
             showAlertService.showAlert("Success", "User registered successfully.");
         } catch (IllegalArgumentException e) {
             showAlertService.showAlert("Error", e.getMessage());

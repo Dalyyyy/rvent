@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.controllers.AddTeamController" prefHeight="400.0" prefWidth="600.0">
+    <VBox fx:id="addTeamVBox" spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+        <Label text="Team Name:"/>
+        <TextField fx:id="teamNameField" promptText="Enter Team Name"/>
+
+        <Label text="Select Organizer:"/>
+        <ComboBox fx:id="organizerComboBox" promptText="Choose an Organizer"/>
+
+        <Button fx:id="addTeamButton" text="Add Team" onAction="#handleAddTeam"/>
+    </VBox>
+</AnchorPane>

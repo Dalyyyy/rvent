@@ -31,13 +31,13 @@ public class AddEnterpriseController {
     private TextField email;
 
     @FXML
-    private PasswordField description;
+    private TextField description;
 
     @FXML
     private TextField name;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
     private PasswordField rPassword;
@@ -54,31 +54,43 @@ public class AddEnterpriseController {
         String enterpriseDescription = description.getText();
 
         try {
-            if (enterpriseName.isEmpty() || enterpriseEmail.isEmpty() || enterprisePassword.isEmpty() || confirmedPassword.isEmpty() ) {
+            // Check if any required field is empty
+            if (enterpriseName.isEmpty() || enterpriseEmail.isEmpty() || enterprisePassword.isEmpty() || confirmedPassword.isEmpty()) {
                 throw new IllegalArgumentException("All fields are required.");
             }
 
+            // Validate password complexity
             if (!enterprisePassword.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$")) {
                 throw new IllegalArgumentException("Password must contain at least one letter, one digit, and be at least 8 characters long.");
             }
 
+            // Validate email format
             if (!EMAIL_PATTERN.matcher(enterpriseEmail).matches()) {
                 throw new IllegalArgumentException("Invalid email format.");
             }
 
+            // Register enterprise based on whether description is provided
+            Enterprise enterprise;
             if (!enterpriseDescription.isEmpty()) {
-                enterpriseService.register(new Enterprise(enterpriseName, enterpriseEmail, enterprisePassword, enterpriseDescription), confirmedPassword);
+                enterprise = new Enterprise(enterpriseName, enterpriseEmail, enterprisePassword, enterpriseDescription);
             } else {
-                enterpriseService.register(new Enterprise(enterpriseName, enterpriseEmail, enterprisePassword), confirmedPassword);
+                enterprise = new Enterprise(enterpriseName, enterpriseEmail, enterprisePassword);
             }
 
+            // Register enterprise through enterpriseService
+            enterpriseService.register(enterprise, confirmedPassword);
+
+            // Show success message
             showAlertService.showAlert("Success", "Enterprise registered successfully.");
         } catch (IllegalArgumentException e) {
+            // Show error for validation failures
             showAlertService.showAlert("Error", e.getMessage());
         } catch (SQLException e) {
+            // Show error for database-related issues
             showAlertService.showAlert("Error", "An error occurred while registering the Enterprise: " + e.getMessage());
         }
     }
+
 
     @FXML
     void onClickBackButton(ActionEvent event) {

@@ -1,8 +1,6 @@
 package org.test;
 
-import org.entities.Enterprise;
 import org.entities.User;
-import org.services.EnterpriseService;
 import org.services.UserService;
 
 import java.sql.SQLException;
@@ -26,11 +24,36 @@ public class Main {
 //        }catch (SQLException e){
 //            System.out.println(e.getMessage());
 //        }
-//        userService.register(new User("qqqw","qqqqq","aaaa@aaa","0007",LocalDate.of(2000,2,2)),"0007");
-//        userService.authenticateUser("aaaa5555@aaa","00087");
+          userService.register(new User("rania","rebai","raniarebai561252@gmail.com","Test123456", LocalDate.of(2000,2,2),28751504),"Test123456");
+
+//           userService.authenticateUser("aaaa5555@aaa","00087");
 //
-        EnterpriseService enterpriseService = new EnterpriseService();
-        enterpriseService.register(new Enterprise("aaa","aaaa","x@cx","aaaw"),"aaaw");
-    }
+//        EnterpriseService enterpriseService = new EnterpriseService();
+//        enterpriseService.register(new Enterprise("aaa","aaaa","x@cx","aaaw"),"aaaw");
+//        User user = new User("John", "Doe", "john@example1.com", "password123", LocalDate.of(1990, 5, 15), 28751504);
+//
+//        // Create an instance of your class
+//        UserService instance = new UserService();
+
+//        try {
+//            // Call the register method
+//            instance.register(user, "password123");
+//
+//            // If the registration is successful, it means the user is inserted into the database
+//            System.out.println("User registered successfully.");
+//        } catch (SQLException e) {
+//            // Handle any SQL exceptions
+//            e.printStackTrace();
+//        } catch (IllegalArgumentException e) {
+//            // Handle password mismatch or email already registered exceptions
+//            e.printStackTrace();
+//        } catch (IllegalStateException e) {
+//            // Handle SMS sending failure exception
+//            e.printStackTrace();
+//        }
+      }
+
+
 
 }
+

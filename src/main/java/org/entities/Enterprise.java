@@ -8,6 +8,7 @@ public class Enterprise {
     private String description;
     private String email;
     private String password;
+    private int phoneNumber;
     private List<Event> events;
     private List<sponsoringRequest> sponsoringRequests;
 
@@ -72,6 +73,14 @@ public class Enterprise {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setEmail(String email) {
