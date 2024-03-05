@@ -5,15 +5,55 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+import com.github.sarxos.webcam.Webcam;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Optional;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamResolution;
+import javafx.scene.control.*;
 import org.util.RventDB;
 import org.util.RventDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.Random;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -96,7 +136,8 @@ public class AddSeats {
 
     @FXML
     private Button C1;
-
+    @FXML
+    private ImageView webcamView;
     @FXML
     private Button C2;
 
@@ -133,7 +174,7 @@ public class AddSeats {
     @FXML
     private TextField idid;
     @FXML
-    private Button back ;
+    private Button back;
     @FXML
     private Label selectedSeats;
 
@@ -150,11 +191,12 @@ public class AddSeats {
 
         idid.clear();
         Sid.clear();
-       // childcombo.clear();
+        // childcombo.clear();
         //seniorcombo.clear();
-       // time.clear();
+        // time.clear();
         //totalPrice.setText("");
     }
+
     @FXML
     void back(ActionEvent event) {
         try {
@@ -164,11 +206,6 @@ public class AddSeats {
             System.err.println(e.getMessage());
         }
     }
-
-
-
-
-
 
 
     @FXML
@@ -184,28 +221,92 @@ public class AddSeats {
     @FXML
     void Confirmer(ActionEvent event) {
         try {
-            int id = 0;
-            String siddd = Sid.getText();
-            seeats seat= new seeats(id,siddd);
-            serviceseat sr = new serviceseat();
-            sr.insertOne(seat);
-            String total=Sid.getText();
-            selectedSeats.setText(total);
-
-            // Show confirmation message
+            // Prompt the user to perform an action
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmation");
+            alert.setTitle("Human Verification");
             alert.setHeaderText(null);
-            alert.setContentText("Confirmation faite!");
-            alert.showAndWait();
+            alert.setContentText("Please click on the button below to confirm that you're human.");
+            ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            alert.getButtonTypes().setAll(confirmButtonType, ButtonType.CANCEL);
+            Optional<ButtonType> result = alert.showAndWait();
 
-        } catch (NumberFormatException | SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("NUMBER FORMAT EXCEPTION");
-            alert.show();
+            // Verify user action
+            if (result.isPresent() && result.get() == confirmButtonType) {
+                // Schedule the capture of image after 4 seconds
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        Platform.runLater(() -> {
+                            try {
+                                // Capture an image from the webcam
+                                Webcam webcam = discoverWebcam();
+                                if (webcam != null) {
+                                    webcam.open();
+                                    BufferedImage bufferedImage = webcam.getImage();
+                                    webcam.close();
+
+                                    // Convert BufferedImage to JavaFX Image
+                                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                                    try {
+                                        ImageIO.write(bufferedImage, "png", outputStream);
+                                        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+                                        Image image = new Image(inputStream);
+                                        webcamView.setImage(image);
+
+                                        // Proceed with seat confirmation
+                                        int id = 0;
+                                        String siddd = Sid.getText();
+                                        seeats seat = new seeats(id, siddd);
+                                        serviceseat sr = new serviceseat();
+                                        sr.insertOne(seat);
+                                        String total = Sid.getText();
+                                        selectedSeats.setText(total);
+
+                                        // Show confirmation message
+                                        Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
+                                        confirmationAlert.setTitle("Confirmation");
+                                        confirmationAlert.setHeaderText(null);
+                                        confirmationAlert.setContentText("Confirmation faite!");
+                                        confirmationAlert.showAndWait();
+                                    } catch (IOException e) {
+                                        showAlert("Error", "Failed to convert image.");
+                                    }
+                                } else {
+                                    showAlert("Error", "No webcam available.");
+                                }
+                            } catch (AWTException | SQLException e) {
+                                showAlert("Error", "An error occurred while confirming: " + e.getMessage());
+                            }
+                        });
+                    }
+                }));
+                timeline.setCycleCount(1);
+                timeline.play();
+            } else {
+                // User did not confirm, display an error message
+                showAlert("Error", "Confirmation not done. Please confirm that you're human.");
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Error", "An error occurred while confirming: " + e.getMessage());
         }
     }
 
+    private Webcam discoverWebcam() throws AWTException {
+        Webcam webcam = Webcam.getDefault(); // Recherche de la webcam par défaut
+        if (webcam == null) {
+            throw new AWTException("No webcam available.");
+        }
+        return webcam;}
+
+
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 
     @FXML
@@ -296,9 +397,7 @@ public class AddSeats {
             // Add event handler for each button to handle seat selection
             button.setOnAction(event -> handleSeatButtonClick(button));
         }
-        }
-
-
+    }
 
 
     private List<String> getChosenSeatNamesFromDatabase() {
@@ -315,16 +414,6 @@ public class AddSeats {
         }
         return chosenSeatNames;
     }
-
-
-
-
-
-
-
-
-
-
 
 
     private void showAlert(Alert.AlertType alertType, String databaseError, String s) {
@@ -347,6 +436,7 @@ public class AddSeats {
         // Update the fields with the selected seat IDs
         updateFields();
     }
+
     private void updateFields() {
         // Update the selectedSeats label with the IDs of the selected seats
         StringBuilder seatsTextBuilder = new StringBuilder();
