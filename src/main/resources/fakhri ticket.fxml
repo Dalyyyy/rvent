@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="656.0" prefWidth="694.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.ticket">
+   <children>
+      <SplitPane layoutY="-42.0" prefHeight="776.0" prefWidth="287.0" style="-fx-background-color: #3CE364;">
+         <items>
+            <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="774.0" prefWidth="326.0" style="-fx-background-color: green;">
+                     <children>
+                        <Text layoutX="122.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EVENTS" />
+                        <Button fx:id="seatsBtn" layoutX="8.0" layoutY="339.0" mnemonicParsing="false" onAction="#goSelectSeats" prefHeight="47.0" prefWidth="272.0" style="-fx-background-color: #29323D;" text="Sélectionner Vos Séges" textFill="WHITE">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="afficher" layoutX="8.0" layoutY="399.0" mnemonicParsing="false" onAction="#afficher" prefHeight="47.0" prefWidth="272.0" style="-fx-background-color: #29323D;" text="Afficher Mes Tickets" textFill="WHITE">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="modifier" layoutX="8.0" layoutY="458.0" mnemonicParsing="false" onAction="#modifier" prefHeight="47.0" prefWidth="272.0" style="-fx-background-color: #29323D;" text="Modifié Mes Tickets" textFill="WHITE">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Text fx:id="evntname" fill="#3b4754" layoutX="38.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EventName" wrappingWidth="217.91453170776367">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="30.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="affs" layoutX="8.0" layoutY="518.0" mnemonicParsing="false" onAction="#affs" prefHeight="47.0" prefWidth="272.0" style="-fx-background-color: #29323D;" text="Afficher Siéges " textFill="WHITE">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+         </items>
+      </SplitPane>
+      <Text fill="#3b4754" layoutX="326.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adult:" wrappingWidth="53.24787521362305">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="323.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Child:" wrappingWidth="47.91453170776367">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="321.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senior:" wrappingWidth="62.58121871948242">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="309.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Submit " wrappingWidth="156.04787826538086">
+         <font>
+            <Font name="Microsoft YaHei Light" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="419.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" wrappingWidth="53.24787521362305">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="10.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="422.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8" wrappingWidth="45.24787521362305">
+         <font>
+            <Font name="Microsoft YaHei" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="422.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" wrappingWidth="45.24787521362305">
+         <font>
+            <Font name="Microsoft YaHei" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="423.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="45.24787521362305">
+         <font>
+            <Font name="Microsoft YaHei" size="16.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="checkbox" layoutX="399.0" layoutY="268.0" mnemonicParsing="false" onAction="#updateTotal" style="-fx-background-color: #29323D;" textFill="#3b4754" />
+      <Text fill="#3b4754" layoutX="539.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="45.24787521362305">
+         <font>
+            <Font name="Microsoft YaHei" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="totalPrice" boundsType="VISUAL" fill="#3b4754" layoutX="539.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00" wrappingWidth="80.7896728515625">
+         <font>
+            <Font name="Microsoft YaHei" size="23.0" />
+         </font>
+      </Text>
+      <Label alignment="TOP_CENTER" layoutX="297.0" layoutY="93.0" prefHeight="47.0" prefWidth="219.0" text="Select Tickets" textFill="#3b4754" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="adultcombo" layoutX="387.0" layoutY="159.0" onAction="#adultcombo" prefHeight="17.0" prefWidth="27.0" style="-fx-background-color: white;" />
+      <TextField fx:id="seniorcombo" layoutX="388.0" layoutY="189.0" onAction="#updateTotal" prefHeight="19.0" prefWidth="27.0" style="-fx-background-color: white;" />
+      <TextField fx:id="childcombo" layoutX="389.0" layoutY="220.0" onAction="#updateTotal" prefHeight="8.0" prefWidth="27.0" style="-fx-background-color: white;" />
+      <DatePicker fx:id="dateRES" layoutX="456.0" layoutY="352.0" prefHeight="26.0" prefWidth="135.0" promptText="dd/MM/yyyy" style="-fx-background-color: #29323D;" />
+      <TextField fx:id="time" layoutX="449.0" layoutY="402.0" promptText="HH:MM:SS" style="-fx-background-color: white;" />
+      <Button fx:id="confirmationBtn" layoutX="516.0" layoutY="532.0" mnemonicParsing="false" onAction="#goToConfirmation" prefHeight="25.0" prefWidth="122.0" style="-fx-background-color: #29323D;" text="CONFIRM" textFill="WHITE">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="delete" layoutX="338.0" layoutY="532.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="122.0" style="-fx-background-color: #29323D;" text="Delete " textFill="WHITE">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="12.0" />
+         </font>
+      </Button>
+      <Text fill="#3b4754" layoutX="309.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Time:" wrappingWidth="98.58115768432617">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fill="#3b4754" layoutX="309.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Date:" wrappingWidth="98.58115768432617">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="16.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
