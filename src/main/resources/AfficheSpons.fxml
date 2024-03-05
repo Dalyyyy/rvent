@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane fx:id="AfficherProduitScene" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #3ce364;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.AfficheSpons">
+    <!--   <stylesheets>-->
+    <!--      <URL value="@stylesheet.css" />-->
+    <!--   </stylesheets>-->
+    <children>
+        <ImageView fitHeight="390.0" fitWidth="420.0" layoutX="440.0" layoutY="-120.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Rvent.png" />
+            </image>
+        </ImageView>
+        <Line endX="1066.0" layoutX="167.0" layoutY="163.0" startX="-113.0" stroke="#008152" />
+        <HBox layoutX="89.0" layoutY="172.0" prefHeight="607.0" prefWidth="1109.0" style="-fx-background-color: transparent;">
+            <children>
+                <ScrollPane fx:id="scroll" prefHeight="607.0" prefWidth="1127.0" style="-fx-background-color: #3ce364; -fx-border-color: black; -fx-border-width: 1px;">
+                    <content>
+                        <GridPane fx:id="grid" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: black;">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                        </GridPane>
+                    </content>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </ScrollPane>
+            </children>
+        </HBox>
+
+
+    </children>
+</AnchorPane>

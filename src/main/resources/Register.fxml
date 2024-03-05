@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.PasswordField?>
+
+<AnchorPane prefHeight="400.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.RegisterController">
+   <children>
+      <TextField fx:id="name" layoutX="54.0" layoutY="109.0" prefHeight="38.0" prefWidth="242.0" promptText="name" style="-fx-background-color: #ffffff;" />
+      <TextField fx:id="email" layoutX="407.0" layoutY="186.0" prefHeight="38.0" prefWidth="242.0" promptText="example@example.com" style="-fx-background-color: #ffff;" />
+      <TextField fx:id="familyName" layoutX="407.0" layoutY="109.0" prefHeight="38.0" prefWidth="242.0" promptText="familyName" style="-fx-background-color: #ffff;" />
+      <PasswordField fx:id="password" layoutX="54.0" layoutY="186.0" prefHeight="38.0" prefWidth="242.0" promptText="password" style="-fx-background-color: #ffff;" />
+      <PasswordField fx:id="rPassword" layoutX="54.0" layoutY="267.0" prefHeight="38.0" prefWidth="242.0" promptText="re-password" style="-fx-background-color: #fff;" />
+      <DatePicker fx:id="birthDate" layoutX="407.0" layoutY="267.0" prefHeight="38.0" prefWidth="242.0" promptText="dd/mm/yyyy" style="-fx-background-color: #ffff;" />
+      <Button layoutX="107.0" layoutY="330.0" mnemonicParsing="false" onAction="#register" prefHeight="38.0" prefWidth="103.0" style="-fx-background-color: #3CE364;" text="Register" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font></Button>
+      <Text layoutX="44.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your account ">
+         <font>
+            <Font name="Lato Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#a7a8bb" layoutX="44.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an Account ?" />
+      <Button fx:id="singInButton" layoutX="186.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickSignIn" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: #F3F5F9;" text="Sign In" textFill="#3ce364" />
+      <Text layoutX="54.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+      <Text layoutX="54.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" />
+      <Text layoutX="54.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="re-password " />
+      <Text layoutX="407.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Family Name" />
+      <Text layoutX="407.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+      <Text layoutX="407.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birth date" />
+      <Button fx:id="backButton" layoutX="676.0" layoutY="12.0" mnemonicParsing="false" onAction="#onClickBackButton" style="-fx-background-color: #F3F5F9;" text="back" textFill="#3ce364" />
+      <Text fill="RED" layoutX="88.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="108.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="125.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="478.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="438.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text fill="RED" layoutX="461.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <Text layoutX="411.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number " />
+      <Text fill="RED" layoutX="525.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+      <TextField fx:id="phone" layoutX="407.0" layoutY="351.0" />
+   </children>
+</AnchorPane>

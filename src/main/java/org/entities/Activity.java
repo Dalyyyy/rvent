@@ -2,6 +2,8 @@ package org.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 public class Activity {
     private int id;

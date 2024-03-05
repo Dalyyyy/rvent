@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.controllers.UpdateUserController" prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label text="Name:" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="50.0"/>
+        <TextField fx:id="nameField" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="50.0"/>
+
+        <Label text="Family Name:" AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="50.0"/>
+        <TextField fx:id="familyNameField" AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="50.0"/>
+
+        <Label text="Phone Number:" AnchorPane.topAnchor="100.0" AnchorPane.leftAnchor="50.0"/>
+        <TextField fx:id="phoneNumberField" AnchorPane.topAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="50.0"/>
+
+        <Label text="Password:" AnchorPane.topAnchor="140.0" AnchorPane.leftAnchor="50.0"/>
+        <PasswordField fx:id="passwordField" AnchorPane.topAnchor="140.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="50.0"/>
+
+        <Button text="Submit" onAction="#handleGetSelectedUserData" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="50.0"/>
+    </children>
+</AnchorPane>

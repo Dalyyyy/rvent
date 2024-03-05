@@ -4,20 +4,16 @@ public class Reclamation {
     private int id ;
     private String title;
     private String description;
-    private String from;
-    private String to;
     private User user;
     private Event event;
 
     public Reclamation() {
     }
 
-    public Reclamation(int id, String title, String description, String from, String to, User user, Event event) {
+    public Reclamation(int id, String title, String description, User user, Event event) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.from = from;
-        this.to = to;
         this.user = user;
         this.event = event;
     }
@@ -46,22 +42,6 @@ public class Reclamation {
         this.description = description;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
     public User getUser() {
         return user;
     }
@@ -84,10 +64,8 @@ public class Reclamation {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", user=" + user +
-                ", event=" + event +
+                ", from='" + user + '\'' +
+                ", to='" + event + '\'' +
                 '}';
     }
 }

@@ -5,14 +5,12 @@ import jakarta.persistence.*;
 public class Notification {
     private int id ;
     private String title;
-    private String from;
     private String description;
     private User user;
 
-    public Notification(int id, String title, String from, String description, User user) {
+    public Notification(int id, String title, String description, User user) {
         this.id = id;
         this.title = title;
-        this.from = from;
         this.description = description;
         this.user = user;
     }
@@ -34,14 +32,6 @@ public class Notification {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
     }
 
     public String getDescription() {
