@@ -10,10 +10,16 @@ package org.controllers;
         import javafx.fxml.FXML;
         import javafx.fxml.FXMLLoader;
         import javafx.scene.Parent;
+        import javafx.scene.control.*;
+        import org.entities.Reservation;
+        import javafx.application.Application;
         import javafx.scene.control.Alert;
-        import javafx.scene.control.DatePicker;
         import javafx.scene.control.TextField;
-       import org.entities.Reservation;
+        import javafx.scene.layout.GridPane;
+        import javafx.stage.Stage;
+
+        import java.util.Optional;
+        import java.util.Random;
         import org.services.ServiceReservation;
 public class AjouterReservation {
 
@@ -50,14 +56,36 @@ public class AjouterReservation {
             LocalDate dateRes = tfdate.getValue();
             LocalTime time = LocalTime.parse(tfTime.getText()); // Parse text to LocalTime
 
-            Reservation reservation = new Reservation(id, nomRes, nomEvent, dateRes, time);
-            ServiceReservation sr = new ServiceReservation();
-            sr.insertOne(reservation);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText(" C bon merci !");
-            alert.showAndWait();
+            // Generate CAPTCHA code
+            String captcha = generateCAPTCHA();
+
+            // Create confirmation dialog with CAPTCHA input
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Confirmation");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Please enter the CAPTCHA code to confirm: " + captcha);
+            Optional<String> result = dialog.showAndWait();
+
+            // Verify CAPTCHA code
+            if (result.isPresent() && result.get().equals(captcha)) {
+                // CAPTCHA code is correct, proceed with reservation insertion
+                Reservation reservation = new Reservation(id, nomRes, nomEvent, dateRes, time);
+                ServiceReservation sr = new ServiceReservation();
+                sr.insertOne(reservation);
+
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Confirmation done. Reservation added successfully!");
+                successAlert.showAndWait();
+            } else {
+                // CAPTCHA code is incorrect, show error message
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Incorrect CAPTCHA code. Reservation not added.");
+                errorAlert.showAndWait();
+            }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("SQL ERROR");
@@ -72,8 +100,20 @@ public class AjouterReservation {
             alert.setContentText("Please enter the date/time in correct format.");
             alert.show();
         }
-
     }
+
+    // Method to generate a random CAPTCHA code with letters and numbers
+    private String generateCAPTCHA() {
+        int length = 4; // Adjust the length of the CAPTCHA code as needed
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder captcha = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            captcha.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return captcha.toString();
+    }
+
 
     @FXML
     void Annuler(ActionEvent event) {
