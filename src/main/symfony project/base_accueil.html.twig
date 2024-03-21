@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>JET ACADEMY</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta charset="utf-8">
+    {% block stylesheets %}
+
+    <!-- Favicon -->
+    <link href="{{ asset('front/img/LOGO JET Academy-02.png')}}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ asset('front/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('front/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ asset('front/css/style.css')}}" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="main.css"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+
+
+
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+
+
+    {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('front/lib/easing/easing.min.js')}}"></script>
+    <script src="{{ asset('front/lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{ asset('front/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ asset('front/js/main.js')}}"></script>
+
+
+
+    {% endblock %}
+    <script>
+
+        /*
+    Designed by: SELECTO
+    Original image: https://dribbble.com/shots/5311359-Diprella-Login
+*/
+
+        let switchCtn = document.querySelector("#switch-cnt");
+        let switchC1 = document.querySelector("#switch-c1");
+        let switchC2 = document.querySelector("#switch-c2");
+        let switchCircle = document.querySelectorAll(".switch__circle");
+        let switchBtn = document.querySelectorAll(".switch-btn");
+        let aContainer = document.querySelector("#a-container");
+        let bContainer = document.querySelector("#b-container");
+        let allButtons = document.querySelectorAll(".submit");
+
+        let getButtons = (e) => e.preventDefault()
+
+        let changeForm = (e) => {
+
+            switchCtn.classList.add("is-gx");
+            setTimeout(function(){
+                switchCtn.classList.remove("is-gx");
+            }, 1500)
+
+            switchCtn.classList.toggle("is-txr");
+            switchCircle[0].classList.toggle("is-txr");
+            switchCircle[1].classList.toggle("is-txr");
+
+            switchC1.classList.toggle("is-hidden");
+            switchC2.classList.toggle("is-hidden");
+            aContainer.classList.toggle("is-txl");
+            bContainer.classList.toggle("is-txl");
+            bContainer.classList.toggle("is-z200");
+        }
+
+        let mainF = (e) => {
+            for (var i = 0; i < allButtons.length; i++)
+                allButtons[i].addEventListener("click", getButtons );
+            for (var i = 0; i < switchBtn.length; i++)
+                switchBtn[i].addEventListener("click", changeForm)
+        }
+
+        window.addEventListener("load", mainF);
+
+    </script>
+
+    <script>
+
+        (function ($) {
+            $.fn.countTo = function (options) {
+                options = options || {};
+
+                return $(this).each(function () {
+                    // set options for current element
+                    var settings = $.extend({}, $.fn.countTo.defaults, {
+                        from:            $(this).data('from'),
+                        to:              $(this).data('to'),
+                        speed:           $(this).data('speed'),
+                        refreshInterval: $(this).data('refresh-interval'),
+                        decimals:        $(this).data('decimals')
+                    }, options);
+
+                    // how many times to update the value, and how much to increment the value on each update
+                    var loops = Math.ceil(settings.speed / settings.refreshInterval),
+                        increment = (settings.to - settings.from) / loops;
+
+                    // references & variables that will change with each update
+                    var self = this,
+                        $self = $(this),
+                        loopCount = 0,
+                        value = settings.from,
+                        data = $self.data('countTo') || {};
+
+                    $self.data('countTo', data);
+
+                    // if an existing interval can be found, clear it first
+                    if (data.interval) {
+                        clearInterval(data.interval);
+                    }
+                    data.interval = setInterval(updateTimer, settings.refreshInterval);
+
+                    // initialize the element with the starting value
+                    render(value);
+
+                    function updateTimer() {
+                        value += increment;
+                        loopCount++;
+
+                        render(value);
+
+                        if (typeof(settings.onUpdate) == 'function') {
+                            settings.onUpdate.call(self, value);
+                        }
+
+                        if (loopCount >= loops) {
+                            // remove the interval
+                            $self.removeData('countTo');
+                            clearInterval(data.interval);
+                            value = settings.to;
+
+                            if (typeof(settings.onComplete) == 'function') {
+                                settings.onComplete.call(self, value);
+                            }
+                        }
+                    }
+
+                    function render(value) {
+                        var formattedValue = settings.formatter.call(self, value, settings);
+                        $self.html(formattedValue);
+                    }
+                });
+            };
+
+            $.fn.countTo.defaults = {
+                from: 0,               // the number the element should start at
+                to: 0,                 // the number the element should end at
+                speed: 1000,           // how long it should take to count between the target numbers
+                refreshInterval: 100,  // how often the element should be updated
+                decimals: 0,           // the number of decimal places to show
+                formatter: formatter,  // handler for formatting the value before rendering
+                onUpdate: null,        // callback method for every time the element is updated
+                onComplete: null       // callback method for when the element finishes updating
+            };
+
+            function formatter(value, settings) {
+                return value.toFixed(settings.decimals);
+            }
+        }(jQuery));
+
+        jQuery(function ($) {
+            // custom formatting example
+            $('.count-number').data('countToOptions', {
+                formatter: function (value, options) {
+                    return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+                }
+            });
+
+            // start all the timers
+            $('.timer').each(count);
+
+            function count(options) {
+                var $this = $(this);
+                options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+                $this.countTo(options);
+            }
+        });
+
+    </script>
+
+
+
+</head>
+
+<body>
+
+
+{% block body %}{% endblock %}
+
+</body>
+
+</html>
